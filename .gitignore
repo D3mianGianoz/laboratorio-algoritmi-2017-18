@@ -1,4 +1,5 @@
 OrderedArrayExample/*.csv
+OrderedArrayExample/**/*.zip
 
 #PER PROGETTO C
 OrderedArrayExample/OrderedArray_C/scr/unity*
