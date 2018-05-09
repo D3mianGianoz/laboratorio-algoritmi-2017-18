@@ -1,5 +1,6 @@
 OrderedArrayExample/*.csv
 OrderedArrayExample/**/*.zip
+Es2/Esercizio2_Java/*.txt
 
 #PER PROGETTO C
 OrderedArrayExample/OrderedArray_C/scr/unity*
@@ -11,6 +12,9 @@ OrderedArrayExample/OrderedArray_Java/*.jar
 OrderedArrayExample/OrderedArray_Java/classes/
 Es1/Esercizio1_Java/classes
 Es1/Esercizio1_Java/JUnit
+Es2/Esercizio2_Java/*.jar
+Es2/Esercizio2_Java/classes
+
 
 # NON CARICO I FILE PDF
 ./*.pdf

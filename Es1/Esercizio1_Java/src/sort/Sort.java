@@ -5,7 +5,6 @@ import java.util.Comparator;
 import sortusagejava.*;
 
 /**
- *
  * @author Costamagna Alberto e Gianotti Damiano
  * @param <T>: type of the sorted list of elements
  */
@@ -50,7 +49,7 @@ public class Sort<T> {
      * @param list : list to print
      */
 
-    public void printArray(List<T> list) // TODO perche' era static ?
+    public void printArray(List<T> list)
     {
         for (int i = 0; i < list.size(); i++)
             System.out.println(list.get(i));
@@ -61,8 +60,7 @@ public class Sort<T> {
      * 
      * @param list: generic list of items to sort
      * @param left,right : two index for the algorithm
-     * @param comparator: comparator: a comparator implementing the precedence
-     *        relation between the list elements.
+     * @param comparator: comparator: a comparator implementing the precedence relation between the list elements.
      * @throws sort.SortException iff the parameter is null
      */
 
@@ -122,9 +120,8 @@ public class Sort<T> {
     }
 
     /**
-     * Method that check if the list is already sorted
-     * 
      * @param list : list to check
+     * @return true if the list is already sorted
      */
     private boolean isSorted(ArrayList<Long> list) {
         for (int i = 0; i < list.size() - 1; i++) {
@@ -136,12 +133,15 @@ public class Sort<T> {
     }
 
     /**
-     * Method that checks if there are two number in the list that if they are
-     * summed the result is n
+     * Method that checks whether the sum of two elements of any list is n 
+     * It manages both sorted and unsorted lists
      * 
-     * @param list: list to check
+     * @param list: the list to check
      * @param n: the number to check
+     * 
+     * @return: true if the sum of two elements in the list is n
      */
+    
     public boolean isSumContained(ArrayList<Long> list, long n) throws SortException {
         if (list == null)
             throw new SortException("Invalid parameters");
@@ -155,22 +155,20 @@ public class Sort<T> {
             }
         }
 
-      return ricBinaria(list,n);
+        return ricBinaria(list, n);
     }
 
     /**
-     * Method that checks if there are two number in the list that if they are
-     * summed the result is n
-     * 
      * @param list: the list to check
      * @param n: the number to check
+     * 
+     * @return: true if the sum of two elements in the list is n
      */
     private boolean ricBinaria(ArrayList<Long> list, long n) {
         int i = 0;
-        int j = list.size()-1;
+        int j = list.size() - 1;
         long somma = 0;
-        while(i<j)
-        {
+        while (i < j) {
             somma = list.get(i) + list.get(j);
             if (somma == n)
                 return true;
