@@ -9,3 +9,10 @@ OrderedArrayExample/OrderedArray_C/build/
 #PER PROGETTO JAVA
 OrderedArrayExample/OrderedArray_Java/*.jar
 OrderedArrayExample/OrderedArray_Java/classes/
+Es1/Esercizio1_Java/classes
+Es1/Esercizio1_Java/JUnit
+
+# NON CARICO I FILE PDF
+./*.pdf
+
+
