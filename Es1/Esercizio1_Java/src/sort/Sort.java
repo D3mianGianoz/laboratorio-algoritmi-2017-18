@@ -49,8 +49,7 @@ public class Sort<T> {
      * @param list : list to print
      */
 
-    public void printArray(List<T> list)
-    {
+    public void printArray(List<T> list) {
         for (int i = 0; i < list.size(); i++)
             System.out.println(list.get(i));
     }
@@ -60,7 +59,8 @@ public class Sort<T> {
      * 
      * @param list: generic list of items to sort
      * @param left,right : two index for the algorithm
-     * @param comparator: comparator: a comparator implementing the precedence relation between the list elements.
+     * @param comparator: comparator: a comparator implementing the precedence
+     *        relation between the list elements.
      * @throws sort.SortException iff the parameter is null
      */
 
@@ -133,15 +133,15 @@ public class Sort<T> {
     }
 
     /**
-     * Method that checks whether the sum of two elements of any list is n 
-     * It manages both sorted and unsorted lists
+     * Method that checks whether the sum of two elements of any list is n It
+     * manages both sorted and unsorted lists
      * 
      * @param list: the list to check
      * @param n: the number to check
      * 
      * @return: true if the sum of two elements in the list is n
      */
-    
+
     public boolean isSumContained(ArrayList<Long> list, long n) throws SortException {
         if (list == null)
             throw new SortException("Invalid parameters");
@@ -174,7 +174,7 @@ public class Sort<T> {
                 return true;
             else if (somma > n)
                 j--;
-            else 
+            else
                 i++;
         }
         return false;
