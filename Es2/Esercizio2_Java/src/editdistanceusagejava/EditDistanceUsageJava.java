@@ -11,8 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/*
- * 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
  */
 
 public class EditDistanceUsageJava {
@@ -23,9 +23,6 @@ public class EditDistanceUsageJava {
 
         if (args.length != 2)
             System.out.println("Usage: java EditDistanceUsage 'dictionary.txt' 'correctme.txt'");
-
-        String a1 = "Quando";
-        String a2 = "quando";
 
         String dictionary = args[0];
         String Jlennon = args[1];
@@ -41,10 +38,6 @@ public class EditDistanceUsageJava {
         }
 
         spellChecker(dictList, jlenList);
-
-        System.out.println("\nQuesto e' test di edit_distance: " + EditDistance.edit_distance(a1, a2)
-                + "\nInvece questo e' un test di edit_distance_dyn: "
-                + EditDistance.edit_distance_dyn(a1, a2, a1.length(), a2.length()));
     }
 
     private static void loadFile(String filepath, ArrayList<String> wordlist) throws IOException {
@@ -90,13 +83,13 @@ public class EditDistanceUsageJava {
         for (int i = 0, k = 0; i < quote.size(); i++, result.clear(), k = 0) {
             word = quote.get(i);
             vocable = dictionary.get(0);
-            min = edit = EditDistance.edit_distance_dyn(word, vocable, word.length(), vocable.length());
+            min = edit = EditDistance.edit_distance_dyn(word, vocable);
 
             for (k = 1; k < dictionary.size() && min != 0; k++) {
                 // System.out.println(" \t TEST :: Edit vale " + min + " al ciclo: " + i);
 
                 vocable = dictionary.get(k);
-                edit = EditDistance.edit_distance_dyn(word, vocable, word.length(), vocable.length());
+                edit = EditDistance.edit_distance_dyn(word, vocable);
                 // edit = EditDistance.edit_distance(word, vocable);
 
                 if (edit < min) {
@@ -107,7 +100,7 @@ public class EditDistanceUsageJava {
                     result.add(vocable);
             }
 
-            System.out.print("La parola\t" + word+"\t" + "\tha edit distance " + min);
+            System.out.print("La parola\t" + word + "\t" + "\tha edit distance " + min);
 
             if (min == 0 || result.isEmpty())
                 System.out.print(" ed e' corretta!\n");

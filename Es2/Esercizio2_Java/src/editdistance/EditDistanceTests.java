@@ -41,7 +41,7 @@ public class EditDistanceTests {
         String empty = "";
         String voidd = "";
 
-        assertTrue(EditDistance.edit_distance_dyn(voidd,empty, voidd.length(), empty.length()) == 0);
+        assertTrue(EditDistance.edit_distance_dyn(voidd,empty) == 0);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class EditDistanceTests {
     {
         String empty = "";
 
-        assertTrue(EditDistance.edit_distance_dyn(s1,empty, s1.length(), empty.length()) == s1.length());
+        assertTrue(EditDistance.edit_distance_dyn(s1,empty) == s1.length());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class EditDistanceTests {
     @Test
     public void firstExample_dyn()
     {
-        assertTrue(EditDistance.edit_distance_dyn(s1, s2, s1.length(), s2.length()) == 1);
+        assertTrue(EditDistance.edit_distance_dyn(s1, s2) == 1);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class EditDistanceTests {
     @Test
     public void secondExample_dyn()
     {
-        assertFalse(EditDistance.edit_distance_dyn(word1, word2, word1.length(), word2.length()) == 5);
+        assertFalse(EditDistance.edit_distance_dyn(word1, word2) == 5);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class EditDistanceTests {
     @Test
     public void thirdExample_dyn()
     {
-        assertFalse(EditDistance.edit_distance_dyn(name1, name2, name1.length(), name2.length()) == 6);
+        assertFalse(EditDistance.edit_distance_dyn(name1, name2) == 6);
     }
 
 }

@@ -81,7 +81,7 @@ public class EditDistance {
     }
 
     /**
-     * Dynamic implementation of edti_distance 
+     * Dynamic implementation of edit_distance 
      * Create a matrix to store results of subproblems and initialize the matrix: -1 (-1 means unknown value)
      * 
      * @param s1,s2: two random string to be compared, not necessarily of the samelength
@@ -102,10 +102,11 @@ public class EditDistance {
     }
 
     /**
-     * TODO
+     * support function for edit_distance_dyn
      * 
      * @param s1,s2: two random string to be compared, not necessarily of the samelength
-     * @return: a integer rappresenting the minimum number of operations required to transform the string s2 into s1
+     * @param dyn_table: matrix used to store the result of the operation
+     * @return: a integer rappresenting the minimum number of operations required to transform the string s2 into s1 using the matrix
      */
 
     static int edit_distance_supp(String s1, String s2, int[][] dyn_table){
@@ -114,17 +115,22 @@ public class EditDistance {
 		if(s2.length() == 0)
 			return s1.length();
 		if(s1.charAt(s1.length()-1) == s2.charAt(s2.length()-1))
-			return edit_distance_supp(sub(s1), sub(s2));
+			return edit_distance_supp(sub(s1), sub(s2), dyn_table);
 			
 		if(dyn_table[s1.length()-1][s2.length()-1] != -1)
 			return dyn_table[s1.length()-1][s2.length()-1];
 		else{
-			dyn_table[s1.length()-1][s2.length()-1] = minTree(edit_distance_supp(sub(s1), s2), edit_distance_supp(s1, sub(s2), dyn_table)) + 1;
-			return minTree(edit_distance_supp(sub(s1), s2), edit_distance_supp(s1, sub(s2)) + 1;
+			dyn_table[s1.length()-1][s2.length()-1] = Math.min(edit_distance_supp(sub(s1), s2, dyn_table), edit_distance_supp(s1, sub(s2), dyn_table)) + 1;
+			return Math.min(edit_distance_supp(sub(s1), s2, dyn_table), edit_distance_supp(s1, sub(s2), dyn_table)) + 1;
 		}
 		
     }
-    
+
+    /**
+     * @param string: a random string
+     * @return: the substring obtained by ignoring the last character
+     */
+
     public static String sub(String s){
 		return s.substring(0, s.length() - 1);
 	}
