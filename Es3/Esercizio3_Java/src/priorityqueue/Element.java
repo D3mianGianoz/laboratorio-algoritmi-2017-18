@@ -22,7 +22,7 @@ public class Element <T>
     }
 
     /**
-     * Return the value of the element
+     * @return: the value of the element
      */
     public T getValue()
     {
@@ -30,7 +30,7 @@ public class Element <T>
     }
 
     /**
-     * Return the key of the element
+     * @return: the key of the element
      */
     public double getKey()
     {
@@ -54,7 +54,7 @@ public class Element <T>
     }
 
     /**
-     * Return the formattet string to print the element
+     * @return: the formattet string to print the element
      */
     @Override
     public String toString()

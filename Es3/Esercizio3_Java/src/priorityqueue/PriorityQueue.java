@@ -57,7 +57,7 @@ public class PriorityQueue
     }
 
     /**
-     * Return the top element of the queue by dequeue it
+     * @return: the top element of the queue by dequeue it
      */
     public Element extractMax() throws PriorityQueueException
     {
@@ -95,7 +95,7 @@ public class PriorityQueue
     }
 
     /**
-     * Return the max element of the queue keeping it queued
+     * @return: the max element of the queue keeping it queued
      */
     public Element getMax()
     {
@@ -115,7 +115,7 @@ public class PriorityQueue
     }
 
     /**
-     * Return the parent index of the given index
+     * @return: the parent index of the given index
      */
     private int parent(int i)
     {
@@ -126,7 +126,7 @@ public class PriorityQueue
     }
 
     /**
-     * Return the left index of the given index
+     * @return: the left index of the given index
      */
     private int left(int i)
     {
@@ -138,7 +138,7 @@ public class PriorityQueue
     }
 
     /**
-     * Return the right index of the given index
+     * @return: the right index of the given index
      */
     private int right(int i)
     {
