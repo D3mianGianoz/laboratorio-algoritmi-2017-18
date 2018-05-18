@@ -1,28 +1,33 @@
-OrderedArrayExample/*.csv
-OrderedArrayExample/**/*.zip
-Es2/Esercizio2_Java/*.txt
-
 #PER PROGETTO C
 OrderedArrayExample/OrderedArray_C/scr/unity*
 OrderedArrayExample/OrderedArray_C/bin/
 OrderedArrayExample/OrderedArray_C/build/
 
-#PER PROGETTO JAVA
+#ORDERED ARRAY
 OrderedArrayExample/OrderedArray_Java/*.jar
 OrderedArrayExample/OrderedArray_Java/classes/
+OrderedArrayExample/*.csv
+OrderedArrayExample/**/*.zip
+
+#ESERCIZIO 1
 Es1/Esercizio1_Java/classes
-Es1/Esercizio1_Java/JUnit
 Es1/Esercizio1_Java/*.jar
+
+#ESERCIZIO 2
 Es2/Esercizio2_Java/*.jar
 Es2/Esercizio2_Java/classes
-Es2/Esercizio2_java/JUnit
+Es2/Esercizio2_Java/*.txt
+
+#ESERCIZIO 3
 Es3/Esercizio3_Java/classes
 Es3/Esercizio3_Java/src/priorityqueue/Test.java
-Es3/Esercizio3_Java/JUnit
+Es3/Esercizio3_java/*.jar
+
+#ESERCIZIO 4
 Es4/Esercizio4_Java/classes
+Es4/Esercizio4_Java/*.jar
 
 
 # NON CARICO I FILE PDF
 ./*.pdf
-
 
