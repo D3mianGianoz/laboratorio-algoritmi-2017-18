@@ -4,12 +4,21 @@ public class Test
 {
     public static void main(String[] args)
     {
-        Graph<Integer> g = new  Graph<Integer>();
+        Graph<String,Integer> g = new Graph<String,Integer>(true);
 
-        g.addNode(4);
-        g.addNode(5);
-        g.addArch(4,5);
-        g.addNodeArch(8, 4);
+        g.addNode("CIAO");
+        g.addNode("PROVA");
+        g.addNode("COME");
+        g.addArch("CIAO","COME",1);
+        g.addArch("CIAO","PROVA",3);
+        g.addArch("PROVA","COME",9);
+
         g.printGraph();
+
     }
 }
+
+
+
+// Hash map dentro hash map
+

@@ -2,19 +2,19 @@ package graph;
 
 import java.util.*;
 
-public class Graph<T>
+public class Graph<T,V>
 {
-    private ArrayList<T> listNode;
-    private Hashtable<T,T> arch;
     private int nNode;
     private int nArch;
-
-    public Graph()
+    private HashMap<T,HashMap<T,V>> adiacentsList;
+    private boolean isDirect;
+    
+    public Graph(boolean isDirect)
     {
-        listNode = new ArrayList<T>();
-        arch = new Hashtable<T,T>();
+        adiacentsList = new HashMap<T,HashMap<T,V>>();
         nNode = 0;
         nArch = 0;
+        this.isDirect = isDirect;
     }
 
     public int getnNode()
@@ -23,7 +23,34 @@ public class Graph<T>
     public int getnArch()
     { return this.nArch; }
 
-    public void addNodeArch (T vNode,T nodeConnected)
+    public void addNode(T value)
+    {
+        adiacentsList.put(value,new HashMap<T,V>());
+        nNode++;
+    }
+
+    public void addArch(T from,T to,V label)
+    {
+        adiacentsList.get(from).put(to,label);
+        if (!isDirect)
+            adiacentsList.get(to).put(from,label);
+        nArch++;
+    }
+
+    public void printGraph()
+    {
+        System.out.println(adiacentsList.toString());
+    }
+
+   
+
+
+}
+
+
+/*
+
+ public void addNodeArch (T vNode,T nodeConnected)
     {
         listNode.add(vNode);   
         arch.put(nodeConnected,vNode);
@@ -51,6 +78,4 @@ public class Graph<T>
         }
         System.out.println(arch.toString());
     }
-
-
-}
+*/
