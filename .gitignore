@@ -15,9 +15,11 @@ Es1/Esercizio1_Java/JUnit
 Es1/Esercizio1_Java/*.jar
 Es2/Esercizio2_Java/*.jar
 Es2/Esercizio2_Java/classes
+Es2/Esercizio2_java/JUnit
 Es3/Esercizio3_Java/classes
 Es3/Esercizio3_Java/src/priorityqueue/Test.java
-Es3/Esercizio3_java/JUnit
+Es3/Esercizio3_Java/JUnit
+Es4/Esercizio4_Java/classes
 
 
 # NON CARICO I FILE PDF
