@@ -1,6 +1,5 @@
 package priorityqueue;
 
-import com.sun.org.apache.xpath.internal.functions.FuncSubstringBefore;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

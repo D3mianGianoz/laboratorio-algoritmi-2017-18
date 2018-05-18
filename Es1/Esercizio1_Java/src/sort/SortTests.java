@@ -1,6 +1,5 @@
 package sort;
 
-import com.sun.org.apache.xpath.internal.functions.FuncSubstringBefore;
 import java.util.Comparator;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
