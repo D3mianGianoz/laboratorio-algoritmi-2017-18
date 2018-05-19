@@ -6,12 +6,12 @@ public class Graph<T,V>
 {
     private int nNode;
     private int nArch;
-    private HashMap<T,HashMap<T,V>> adiacentsList;
+    private HashMap<T,HashMap<T,V>> adiacentsMap;
     private boolean isDirect;
     
     public Graph(boolean isDirect)
     {
-        adiacentsList = new HashMap<T,HashMap<T,V>>();
+        adiacentsMap = new HashMap<T,HashMap<T,V>>();
         nNode = 0;
         nArch = 0;
         this.isDirect = isDirect;
@@ -25,57 +25,57 @@ public class Graph<T,V>
 
     public void addNode(T value)
     {
-        adiacentsList.put(value,new HashMap<T,V>());
+        adiacentsMap.put(value,new HashMap<T,V>());
         nNode++;
     }
 
     public void addArch(T from,T to,V label)
     {
-        adiacentsList.get(from).put(to,label);
+        adiacentsMap.get(from).put(to,label);
         if (!isDirect)
-            adiacentsList.get(to).put(from,label);
+            adiacentsMap.get(to).put(from,label);
         nArch++;
     }
 
     public void printGraph()
     {
-        System.out.println(adiacentsList.toString());
+        System.out.println(adiacentsMap.toString());
+    }
+    
+    public int Weight(){
+        int result = -1; 
+
+        for(HashMap temp : adiacentsMap.values()){
+            for (Object value : temp.values()) {
+                result = result + (int)value;
+            }
+        }
+        return result + 1;
     }
 
+    /**
+     * 
+        If you're only interested in the keys, you can iterate through the keySet() of the map:
+
+        Map<String, Object> map = ...;
+
+        for (String key : map.keySet()) {
+            // ...
+        }
+        If you only need the values, use values():
+
+        for (Object value : map.values()) {
+            // ...
+        }
+        Finally, if you want both the key and value, use entrySet():
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            // ...
+        }
+     */
+    
    
 
-
 }
-
-
-/*
-
- public void addNodeArch (T vNode,T nodeConnected)
-    {
-        listNode.add(vNode);   
-        arch.put(nodeConnected,vNode);
-        nNode++;
-        nArch++;
-    }
-
-    public void addNode (T vNode)
-    {
-        listNode.add(vNode);   
-        nNode++;
-    }
-
-    public void addArch(T nodeFrom,T nodeAt)
-    {
-        arch.put(nodeFrom,nodeAt);
-        nArch++;
-    }
-
-    public void printGraph()
-    {
-        for (int i = 0;i<listNode.size();i++)
-        {
-            System.out.println("Nodo: "+listNode.get(i));            
-        }
-        System.out.println(arch.toString());
-    }
-*/

@@ -14,6 +14,7 @@ public class Test
         g.addArch("PROVA","COME",9);
 
         g.printGraph();
+        System.out.println(g.Weight());
 
     }
 }
@@ -21,4 +22,3 @@ public class Test
 
 
 // Hash map dentro hash map
-
