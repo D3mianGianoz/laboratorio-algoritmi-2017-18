@@ -7,16 +7,24 @@ public class Graph<T,V>
     private int nNode;
     private int nArch;
     private HashMap<T,HashMap<T,V>> adiacentsMap;
-    private Comparator<V> comp;
+    private Comparator<V> comp; //Non usato
     private boolean isDirect;
     
-    public Graph(boolean isDirect,Comparator<V> comparator)
+    public Graph(boolean isDirect,Comparator<V> comparator) // A cosa serve il comparator ???
     {
-        this.adiacentsMap = new HashMap<T,HashMap<T,V>>();
+        this.adiacentsMap = new HashMap<T,HashMap<T,V>>();  //non può essere null se no Nullpointer exception
         this.nNode = 0;  //TODO forse varuabile superflua
         this.nArch = 0;
         this.isDirect = isDirect;
         this.comp = comparator;
+    }
+
+    public Graph(boolean isDirect)
+    {
+        this.adiacentsMap = new HashMap<T,HashMap<T,V>>();  //non può essere null se no Nullpointer exception
+        this.nNode = 0;  //TODO forse varuabile superflua
+        this.nArch = 0;
+        this.isDirect = isDirect;
     }
 
     public boolean getIsDirect()
@@ -56,13 +64,9 @@ public class Graph<T,V>
     {
         if(adiacentsMap.containsKey(value)){
             adiacentsMap.remove(value);
-            for (HashMap temp: adiacentsMap.values())
-            {
+            for (HashMap<T, V> temp: adiacentsMap.values())
                 if (temp.containsKey(value))
-                {
-                   temp.remove(value);
-                }
-            }
+                    temp.remove(value);
         }
         else
             throw new GraphException("Failed to remove Node "+ value +" don't exist");
@@ -81,42 +85,53 @@ public class Graph<T,V>
     }
 
 
-    /**
-     * prima implementazione
-     */
-    
-    public int Weight(){
-        int result = -7; 
+    public double Weight() throws Error
+    {
+        double result = -7; //Non sono sicuro della bontà di questa soluzione
 
-        for(HashMap temp : adiacentsMap.values()){
-            if(!temp.values().isEmpty()){
-                for (Object value : temp.values()) { //Se non sono Int fallisce
-                    result = result + (int)value;
-                }
-                return result;
-            } throw new Error("This graph has no Weight!");
+        for(HashMap<T, V> temp : adiacentsMap.values()){
+            for (Object value : temp.values()) { //Se label degli archi != double fallisce
+                if (value instanceof Double)
+                    result = result + (double)value;
+                else
+                    throw new Error("This graph has no Weight because label is: " + value.getClass());
+            }
         }
-
-        return -1;
+        return result;
     }
 
-    public void printGraph()
+    /**
+     * Stampa poco significativa
+     */
+    public void printGraph() //TODO REMOVE
     {
         System.out.println(adiacentsMap.toString());
+    }
+
+    /**
+     * Stampa del grafo più chiara 
+     */
+
+    public void printGraphDef(){
+        for (Map.Entry<T, HashMap <T,V>> adiEntry : adiacentsMap.entrySet()){
+            System.out.println("RootNode = " + adiEntry.getKey()+": ");
+            HashMap<T, V> tMap = adiEntry.getValue();
+                for (Map.Entry<T, V> entry : tMap.entrySet())
+                    System.out.println(adiEntry.getKey() + " -> label = " + entry.getValue() + " -> " + entry.getKey());
+        }
     }
 
     public int archiIncidenti(T key) throws GraphException
     {
         if(!adiacentsMap.containsKey(key))
-            throw new GraphException("Node not valid");
+            throw new GraphException("Invalid Node");
 
         int count = 0;
-        for(HashMap tmp : adiacentsMap.values())
+        for(HashMap<T, V> tmp : adiacentsMap.values())
         {
-            for(Object obj : tmp.keySet())
-                if((T) obj == key)
+            for(T obj : tmp.keySet())
+                if(obj.equals(key))
                     count++;
-
         }
 
         return count;
@@ -126,7 +141,7 @@ public class Graph<T,V>
     {
         if(adiacentsMap.containsKey(nodo1) && adiacentsMap.containsKey(nodo2))
         {            
-            HashMap tmp = adiacentsMap.get(nodo1);
+            HashMap<T, V> tmp = adiacentsMap.get(nodo1);
             if(tmp.containsKey(nodo2))
                 return true;
             else
@@ -137,43 +152,10 @@ public class Graph<T,V>
             }
         }
         else
-            throw new GraphException("Node not valid");
+            throw new GraphException("Invalid Node");
         
         return false;
     }
 
-
-    /**
-     * 
-        If you're only interested in the keys, you can iterate through the keySet() of the map:
-
-        Map<String, Object> map = ...;
-
-        for (String key : map.keySet()) {
-            // ...
-        }
-        If you only need the values, use values():
-
-        for (Object value : map.values()) {
-            // ...
-        }
-        Finally, if you want both the key and value, use entrySet():
-
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            // ...
-        }
-
-        or 
-
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-        }
-
-        https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
-     */
-
-
+    //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 }
