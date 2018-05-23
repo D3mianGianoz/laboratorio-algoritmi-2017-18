@@ -1,28 +1,34 @@
 package graph;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import priorityqueue.*;
 
 public class Graph<T,V>
 {
     private int nNode;
     private int nArch;
     private HashMap<T,HashMap<T,V>> adiacentsMap;
-    private Comparator<V> comp; //Non usato
+    private Comparator<T> comp; //Non usato
+    private Comparator<V> comp2; //Non usato
     private boolean isDirect;
     
-    public Graph(boolean isDirect,Comparator<V> comparator) // A cosa serve il comparator ???
+    public Graph(boolean isDirect,Comparator<T> comparator,Comparator<V> comp2) // A cosa serve il comparator ???
     {
         this.adiacentsMap = new HashMap<T,HashMap<T,V>>();  //non può essere null se no Nullpointer exception
-        this.nNode = 0;  //TODO forse varuabile superflua
+        this.nNode = 0;  
         this.nArch = 0;
         this.isDirect = isDirect;
         this.comp = comparator;
+        this.comp2 = comp2;
     }
 
     public Graph(boolean isDirect)
     {
         this.adiacentsMap = new HashMap<T,HashMap<T,V>>();  //non può essere null se no Nullpointer exception
-        this.nNode = 0;  //TODO forse varuabile superflua
+        this.nNode = 0;  
         this.nArch = 0;
         this.isDirect = isDirect;
     }
@@ -155,6 +161,71 @@ public class Graph<T,V>
             throw new GraphException("Invalid Node");
         
         return false;
+    }
+
+    public HashMap<T,V> getAdiacent(T node)
+    {
+        return adiacentsMap.get(node);
+    }
+
+    public V getWeightArch(T u,T v)
+    {
+        return adiacentsMap.get(u).get(v);
+    }
+
+    public HashMap prim(T root) throws GraphException, PriorityQueueException
+    {
+        if (isDirect)
+            throw new GraphException("Prim only works with not direct graph");
+
+        HashMap<T,HashMap<T,V>> resultingTree =new HashMap<T,HashMap<T,V>>();
+
+        // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
+        PriorityQueue pq = new PriorityQueue();
+
+        // Vado a settare tutti i nodi nella coda di priorità con massima priorità
+        initPq(pq,root);
+      
+
+        while(pq.getnElem() != 0)
+        {
+            Element u = pq.extractMin();
+            resultingTree.put((T)u.getValue(),new HashMap<T,V>());
+
+            HashMap<T,V> hm = getAdiacent((T)u.getName());
+
+            for (T v : hm.keySet())
+            {
+                if(comp2.compare((V)getWeightArch((T)u.getName(),v),(V)hm.get(v)) < 0)
+                {
+                    // Cambiare valori nella priorityquque (CREDO)
+                }
+            }
+
+
+            
+            
+        }
+
+        
+
+
+
+
+        return resultingTree;
+
+        
+    }
+
+    private void initPq(PriorityQueue pq,T root)
+    {
+        for(T node: adiacentsMap.keySet())
+            {
+                if (comp.compare(node,root) == 0)
+                    pq.insert(new Element<T>(0,null,node));                
+                else
+                    pq.insert(new Element<T>(Double.MAX_VALUE,null,node));
+            }
     }
 
     //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap

@@ -1,10 +1,11 @@
 package graph;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Test {
     public static void main(String[] args) {
-        Graph<String, Object> g = new Graph<String, Object>(true);
+        Graph<String, Double> g = new Graph<String, Double>(false,new StringComparator(), new DoubleComparator());
         try {
             g.addNode("A");
             g.addNode("B");
@@ -18,8 +19,13 @@ public class Test {
             g.addArch("D","A",6d);
             g.addArch("D","B",5d);
             g.addArch("A","C",10d);
-            g.addArch("C","E","bella zio"); //Test per Weight
+            g.addArch("D","E",7d);
+            //g.addArch("C","E","bella zio"); //Test per Weight
 
+            g.printGraph();
+         //   HashMap hm = g.prim("A");
+
+            /*
             g.printGraph();
             g.printGraphDef();  // Cosa ne pensi ?
             
@@ -41,6 +47,7 @@ public class Test {
 
             nArchi = g.archiIncidenti("B");
             System.out.println("N Archi entranti in B: "+nArchi);
+            */
 
         } catch (GraphException e) {
             e.getMessage();
