@@ -26,7 +26,7 @@ public class Test {
             //g.printGraphDef();
             //nILGraph.printGraphDef();
             System.out.println(g.Weight());
-            HashMap hm = g.prim("A");
+            Graph<String, Double> hm = g.prim("A");
             System.out.println(hm.toString());
 
             /*

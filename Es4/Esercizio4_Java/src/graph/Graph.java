@@ -2,10 +2,13 @@ package graph;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import priorityqueue.*;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ * @param <T>: type of the sorted list of elements
+ */
 public class Graph<T,V>
 {
     private int nNode;
@@ -90,7 +93,6 @@ public class Graph<T,V>
             throw new GraphException("Failed to remove Arch "+from + to+"don't exist");
     }
 
-
     public double Weight() throws Error, GraphException
     {
         double result = 0; //Non sono sicuro della bontà di questa soluzione
@@ -112,19 +114,9 @@ public class Graph<T,V>
             return result;
     }
 
-    /*
-     * Stampa poco significativa
-     *
-    public void printGraph() //TODO REMOVE
-    {
-        System.out.println(adiacentsMap.toString());
-    }
-    /*
-
     /**
      * Stampa del grafo piu' chiara 
      */
-
     public void printGraphDef(){
         for (Map.Entry<T, HashMap <T,V>> adiEntry : adiacentsMap.entrySet()){
             System.out.println("RootNode = " + adiEntry.getKey()+": ");
@@ -180,14 +172,14 @@ public class Graph<T,V>
         return adiacentsMap.get(u).get(v);
     }
 
-    public HashMap prim(T root) throws GraphException, PriorityQueueException
+    public Graph<T, V> prim(T root) throws GraphException, PriorityQueueException
     {
         if (isDirect)
             throw new GraphException("Prim only works with not direct graph");
-        HashMap<T,HashMap<T,V>> resultingGraph = new HashMap<T,HashMap<T,V>>();
+        Graph<T, V> resultingGraph = new Graph<T, V>(false, this.comp, this.comp2);
 
         // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
-        PriorityQueue pq = new PriorityQueue();
+        PriorityQueue<T> pq = new PriorityQueue<T>();
 
         // Vado a settare tutti i nodi nella coda di priorità con massima priorità
         initPq(pq,root);
@@ -199,7 +191,6 @@ public class Graph<T,V>
             Element<T> u = pq.extractMin();
             addToResultingGraph(resultingGraph,u);
             
-
             System.out.println(u.getName());
 
             HashMap<T,V> hm = getAdiacent(u.getName());
@@ -217,27 +208,38 @@ public class Graph<T,V>
         return resultingGraph;        
     }
 
-    private void addToResultingGraph(HashMap<T,HashMap<T,V>> r,Element<T> x)
+    private void addToResultingGraph(Graph<T, V> res,Element<T> x) //TODO  le istruzioni dentro l'if;
     {
-        r.put(x.getName(),new HashMap<T,V>());
+        //res.put(x.getName(),new HashMap<T,V>());
+        res.addNode(x.getName());
         if (x.getValue() != null)
         {
-            r.get(x.getName()).put(x.getValue(),(V)(Object)x.getKey());
-            r.get(x.getValue()).put(x.getName(),(V)(Object)x.getKey());
+            //res.get(x.getName()).put(x.getValue(),(V)(Object)x.getKey());
+            res.get(x.getValue()).put(x.getName(),(V)(Object)x.getKey());
         }
             
     }
 
-    private void initPq(PriorityQueue pq,T root)
+    private void initPq(PriorityQueue<T> pq,T root)
     {
         for(T node: adiacentsMap.keySet())
             {
                 if (comp.compare(node,root) == 0)
-                    pq.insert(new Element<T>(0,null,node));                
+                    pq.insert(new Element<T>(0, null, node));                
                 else
-                    pq.insert(new Element<T>(Double.MAX_VALUE,null,node));
+                    pq.insert(new Element<T>(Double.MAX_VALUE, null, node));
             }
     }
+
+    /*
+     * Stampa poco significativa
+     *
+    public void printGraph() //TODO REMOVE
+    {
+        System.out.println(adiacentsMap.toString());
+    }
+    */
+
 
     //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 }

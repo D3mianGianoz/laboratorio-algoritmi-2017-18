@@ -6,7 +6,7 @@ public class Test
     {
         try{
 
-            PriorityQueue pq = new PriorityQueue();
+            PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
 
             Element<Integer> e = new Element<Integer>(5,9);
             pq.insert(e);

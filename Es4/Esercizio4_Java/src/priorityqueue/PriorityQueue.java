@@ -1,14 +1,15 @@
 package priorityqueue;
 
 import java.util.*;
+import java.io.IOException;
 
 
 /**
  * @author : Alberto Costamagna, Damiano Gianotti
  */
-public class PriorityQueue
+public class PriorityQueue <T>
 {
-    private ArrayList<Element> list;
+    private ArrayList<Element<T>> list;
     private int nElem; 
 
     /**
@@ -16,7 +17,7 @@ public class PriorityQueue
      */
     public PriorityQueue()
     {
-        list = new ArrayList<Element>();
+        list = new ArrayList<Element<T>>();
         nElem = 0;
     }
 
@@ -27,16 +28,17 @@ public class PriorityQueue
      * Method that allows to insert a new element in the queue
      * @param elem : the new element to insert
      */
-    public void insert(Element elem)
+    public void insert(Element<T> elem)
     {
         nElem++;
-        Element e = new Element(Double.MIN_VALUE,elem.getValue(),elem.getName());
+        Element<T> e = new Element<T>(Double.MIN_VALUE,elem.getValue(),elem.getName());
         list.add(e);
         try{
             changeKey(nElem,elem.getKey());    
         } catch(PriorityQueueException ex)
         {
-            System.out.println(ex);
+            ex.getMessage();
+            ex.printStackTrace();
         }
         
     }
@@ -57,7 +59,7 @@ public class PriorityQueue
         }
     }
 
-    public void changeKeyParent(int i,double k,Object parent) throws PriorityQueueException
+    public void changeKeyParent(int i,double k,T parent) throws PriorityQueueException
     {
         list.get(i).setKey(k);
         list.get(i).setValue(parent);
@@ -71,11 +73,11 @@ public class PriorityQueue
     /**
      * @return: the top element of the queue by dequeue it
      */
-    public Element extractMin() throws PriorityQueueException
+    public Element<T> extractMin() throws PriorityQueueException
     {
         if (nElem < 1)
             throw new PriorityQueueException("Error empty list");
-        Element max = getMin();
+        Element<T> max = getMin();
         list.set(0,list.get(--nElem));
         minHeapfy(0);
 
@@ -109,7 +111,7 @@ public class PriorityQueue
     /**
      * @return: the max element of the queue keeping it queued
      */
-    public Element getMin()
+    public Element<T> getMin()
     {
         return list.get(0);
     }
@@ -120,7 +122,7 @@ public class PriorityQueue
      */
     private void swap(int i,int j)
     {
-        Element temp;
+        Element<T> temp;
         temp = list.get(i);
         list.set(i,list.get(j));
         list.set(j,temp);
@@ -169,14 +171,14 @@ public class PriorityQueue
             System.out.println(list.get(i).toString());
     }
 
-    public boolean containElement(Element e)
+    public boolean containElement(Element<T> e)
     {
         return list.contains(e);
     }
 
-    public Element getElem(Object x)
+    public Element<T> getElem(Object x)
     {
-        for(Element e : list)
+        for(Element<T> e : list)
         {
             if (e.getName() == x)
                 return e;
@@ -187,7 +189,7 @@ public class PriorityQueue
     public int getPosElem(Object x)
     {
         int i = 0;
-        for(Element e: list)
+        for(Element<T> e: list)
         {
             if(e.getName() == x)
                 return i;
