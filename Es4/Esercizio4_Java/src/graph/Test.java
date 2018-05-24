@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class Test {
     public static void main(String[] args) {
         Graph<String, Double> g = new Graph<String, Double>(false,new StringComparator(), new DoubleComparator());
+        Graph<String, Object> nILGraph = new Graph<String, Object>(false);
         try {
             g.addNode("A");
             g.addNode("B");
@@ -20,13 +21,15 @@ public class Test {
             g.addArch("D","B",5d);
             g.addArch("A","C",10d);
             g.addArch("D","E",7d);
-            //g.addArch("C","E","bella zio"); //Test per Weight
-
-            g.printGraph();
-         //   HashMap hm = g.prim("A");
+            //nILGraph.addArch("C","E","bella zio"); //Test che deve fallire
+            
+            //g.printGraphDef();
+            //nILGraph.printGraphDef();
+            System.out.println(g.Weight());
+            HashMap hm = g.prim("A");
+            System.out.println(hm.toString());
 
             /*
-            g.printGraph();
             g.printGraphDef();  // Cosa ne pensi ?
             
             System.out.println("Nodo A e B sono adiacenti? "+g.sonoAdiacenti("A","B"));
@@ -49,7 +52,7 @@ public class Test {
             System.out.println("N Archi entranti in B: "+nArchi);
             */
 
-        } catch (GraphException e) {
+        } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
         }

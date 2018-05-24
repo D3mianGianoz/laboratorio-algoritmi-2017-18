@@ -12,7 +12,7 @@ public class PriorityQueue
     private int nElem; 
 
     /**
-     * Constructor of the PriorityQueue class
+     * Constructor of the PriorityQueue Object
      */
     public PriorityQueue()
     {
@@ -33,7 +33,8 @@ public class PriorityQueue
             increaseKey(nElem,elem.getKey());    
         } catch(PriorityQueueException ex)
         {
-            System.out.println(ex);
+            ex.getMessage();
+            ex.printStackTrace();
         }
         
     }
@@ -64,7 +65,7 @@ public class PriorityQueue
         if (nElem < 1)
             throw new PriorityQueueException("Error empty list");
         Element max = getMax();
-        list.set(0,list.get(--nElem));
+        list.set(0, list.get(--nElem));
         maxHeapfy(0);
 
         return max;
@@ -72,6 +73,7 @@ public class PriorityQueue
 
     /**
      * Put on the top the element with the hightes value of key
+     * @param i: the element  TODO
      */
     private void maxHeapfy(int i)
     {
@@ -79,7 +81,7 @@ public class PriorityQueue
         int r = right(i);
         int massimo;
 
-        if (l<= nElem && list.get(l).getKey() > list.get(i).getKey())
+        if (l <= nElem && list.get(l).getKey() > list.get(i).getKey())
             massimo = l;
         else
             massimo = r;
@@ -122,7 +124,6 @@ public class PriorityQueue
         if (i > 0 && i <= nElem)
             return i/2;
         return 0;
-            
     }
 
     /**
@@ -134,7 +135,6 @@ public class PriorityQueue
             return 2*i;
         else
             return i;
-        
     }
 
     /**

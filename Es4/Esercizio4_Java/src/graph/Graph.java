@@ -48,7 +48,7 @@ public class Graph<T,V>
             adiacentsMap.put(value,new HashMap<T,V>());
             nNode++;
         }else
-            throw new GraphException("Failed to add Node "+ value +" it is already part of Graph");
+            throw new GraphException("Failed to add Node: "+ value +" it is already part of Graph");
     }
 
     public void addArch(T from,T to,V label) throws GraphException
@@ -59,7 +59,7 @@ public class Graph<T,V>
                 adiacentsMap.get(to).put(from,label);
             nArch++;
         }else
-            throw new GraphException("Failed to add Arch " + from + " or " + to + " don't exist");
+            throw new GraphException("Failed to add Arch: " + from + " or " + to + " don't exist");
     }
 
     public boolean isEmpty(){
@@ -87,14 +87,16 @@ public class Graph<T,V>
                 adiacentsMap.get(to).remove(from,label);
         }
         else
-            throw new GraphException("Failed to remove Arch don't exist");
+            throw new GraphException("Failed to remove Arch "+from + to+"don't exist");
     }
 
 
-    public double Weight() throws Error
+    public double Weight() throws Error, GraphException
     {
-        double result = -7; //Non sono sicuro della bontà di questa soluzione
-
+        double result = 0; //Non sono sicuro della bontà di questa soluzione
+        if(this.isEmpty() || this == null)
+            throw new GraphException("This graph can't be empty or null");
+        
         for(HashMap<T, V> temp : adiacentsMap.values()){
             for (Object value : temp.values()) { //Se label degli archi != double fallisce
                 if (value instanceof Double)
@@ -103,19 +105,24 @@ public class Graph<T,V>
                     throw new Error("This graph has no Weight because label is: " + value.getClass());
             }
         }
-        return result;
+
+        if(result > 0)
+            return isDirect ? result : result / 2;
+        else
+            return result;
     }
 
-    /**
+    /*
      * Stampa poco significativa
-     */
+     *
     public void printGraph() //TODO REMOVE
     {
         System.out.println(adiacentsMap.toString());
     }
+    /*
 
     /**
-     * Stampa del grafo più chiara 
+     * Stampa del grafo piu' chiara 
      */
 
     public void printGraphDef(){
@@ -178,7 +185,7 @@ public class Graph<T,V>
         if (isDirect)
             throw new GraphException("Prim only works with not direct graph");
 
-        HashMap<T,HashMap<T,V>> resultingTree =new HashMap<T,HashMap<T,V>>();
+        HashMap<T,HashMap<T,V>> resultingTree = new HashMap<T,HashMap<T,V>>();
 
         // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
         PriorityQueue pq = new PriorityQueue();
@@ -186,35 +193,25 @@ public class Graph<T,V>
         // Vado a settare tutti i nodi nella coda di priorità con massima priorità
         initPq(pq,root);
       
+        pq.printList();  //Temporaneo
 
         while(pq.getnElem() != 0)
         {
-            Element u = pq.extractMin();
-            resultingTree.put((T)u.getValue(),new HashMap<T,V>());
+            Element<T> u = pq.extractMin();
+            resultingTree.put(u.getValue(),new HashMap<T,V>());
 
-            HashMap<T,V> hm = getAdiacent((T)u.getName());
+            HashMap<T,V> hm = getAdiacent(u.getName());
 
             for (T v : hm.keySet())
             {
-                if(comp2.compare((V)getWeightArch((T)u.getName(),v),(V)hm.get(v)) < 0)
+                if(comp2.compare(getWeightArch(u.getName(),v),hm.get(v)) < 0)
                 {
                     // Cambiare valori nella priorityquque (CREDO)
                 }
             }
-
-
-            
-            
         }
 
-        
-
-
-
-
-        return resultingTree;
-
-        
+        return resultingTree;        
     }
 
     private void initPq(PriorityQueue pq,T root)
