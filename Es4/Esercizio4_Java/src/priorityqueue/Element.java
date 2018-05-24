@@ -63,7 +63,7 @@ public class Element <T>
     /**
      * Set value of the element
      */
-    public void setTalue(T value)
+    public void setValue(T value)
     {
         this.value = value;
     }
@@ -74,7 +74,7 @@ public class Element <T>
     @Override
     public String toString()
     {
-        return "Key: "+this.key+ " Value: "+this.value;
+        return "Name: "+this.name+ " Key: "+this.key+ " Value: "+this.value;
     }
 }
 

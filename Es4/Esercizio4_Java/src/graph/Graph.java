@@ -184,8 +184,7 @@ public class Graph<T,V>
     {
         if (isDirect)
             throw new GraphException("Prim only works with not direct graph");
-
-        HashMap<T,HashMap<T,V>> resultingTree = new HashMap<T,HashMap<T,V>>();
+        HashMap<T,HashMap<T,V>> resultingGraph = new HashMap<T,HashMap<T,V>>();
 
         // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
         PriorityQueue pq = new PriorityQueue();
@@ -198,20 +197,35 @@ public class Graph<T,V>
         while(pq.getnElem() != 0)
         {
             Element<T> u = pq.extractMin();
-            resultingTree.put(u.getValue(),new HashMap<T,V>());
+            addToResultingGraph(resultingGraph,u);
+            
+
+            System.out.println(u.getName());
 
             HashMap<T,V> hm = getAdiacent(u.getName());
 
+            System.out.println(hm.toString());
+
             for (T v : hm.keySet())
             {
-                if(comp2.compare(getWeightArch(u.getName(),v),hm.get(v)) < 0)
-                {
-                    // Cambiare valori nella priorityquque (CREDO)
-                }
+                System.out.println("U: "+u.getName()+ " V: "+v);
+                if(pq.getPosElem(v) >= 0 && comp2.compare(getWeightArch(u.getName(),v),(V)(Object)pq.getElem(v).getKey()) < 0)
+                    pq.changeKeyParent(pq.getPosElem(v),(double)(Object)getWeightArch(u.getName(),v) , u.getName());
             }
+            pq.printList();
         }
+        return resultingGraph;        
+    }
 
-        return resultingTree;        
+    private void addToResultingGraph(HashMap<T,HashMap<T,V>> r,Element<T> x)
+    {
+        r.put(x.getName(),new HashMap<T,V>());
+        if (x.getValue() != null)
+        {
+            r.get(x.getName()).put(x.getValue(),(V)(Object)x.getKey());
+            r.get(x.getValue()).put(x.getName(),(V)(Object)x.getKey());
+        }
+            
     }
 
     private void initPq(PriorityQueue pq,T root)

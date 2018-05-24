@@ -15,12 +15,12 @@ public class Test {
             g.addNode("E");
 
             g.addArch("A","B",3d);
-            g.addArch("B","C",2d);
-            g.addArch("C","D",8d);
-            g.addArch("D","A",6d);
-            g.addArch("D","B",5d);
-            g.addArch("A","C",10d);
-            g.addArch("D","E",7d);
+            g.addArch("B","C",10d);
+            g.addArch("C","D",2d);
+            g.addArch("D","A",5d);
+            g.addArch("C","E",12d);
+            g.addArch("B","E",1d);
+            
             //nILGraph.addArch("C","E","bella zio"); //Test che deve fallire
             
             //g.printGraphDef();

@@ -57,6 +57,17 @@ public class PriorityQueue
         }
     }
 
+    public void changeKeyParent(int i,double k,Object parent) throws PriorityQueueException
+    {
+        list.get(i).setKey(k);
+        list.get(i).setValue(parent);
+        while(i > 0 && list.get(parent(i)).getKey() > list.get(i).getKey())
+        {
+            swap(i,parent(i));
+            i = parent(i);
+        }
+    }
+
     /**
      * @return: the top element of the queue by dequeue it
      */
@@ -161,6 +172,29 @@ public class PriorityQueue
     public boolean containElement(Element e)
     {
         return list.contains(e);
+    }
+
+    public Element getElem(Object x)
+    {
+        for(Element e : list)
+        {
+            if (e.getName() == x)
+                return e;
+        }
+        return null;
+    }
+
+    public int getPosElem(Object x)
+    {
+        int i = 0;
+        for(Element e: list)
+        {
+            if(e.getName() == x)
+                return i;
+            i++;
+        }
+
+        return -1;
     }
 
 }
