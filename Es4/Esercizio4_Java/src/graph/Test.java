@@ -5,8 +5,9 @@ import java.util.HashMap;
 
 public class Test {
     public static void main(String[] args) {
-        Graph<String, Double> g = new Graph<String, Double>(false,new StringComparator(), new DoubleComparator());
-        Graph<String, Object> nILGraph = new Graph<String, Object>(false);
+        //Graph<String, Double> g = new Graph<String, Double>(false,new StringComparator(), new DoubleComparator());
+        //Graph<String, Object> g = new Graph<String, Object>(false);
+        GrafoPesato<String>g = new GrafoPesato<String>(false,new StringComparator());
         try {
             g.addNode("A");
             g.addNode("B");
@@ -23,11 +24,11 @@ public class Test {
             
             //nILGraph.addArch("C","E","bella zio"); //Test che deve fallire
             
-            //g.printGraphDef();
+            g.printGraphDef();
             //nILGraph.printGraphDef();
             System.out.println(g.Weight());
-            Graph<String, Double> hm = g.prim("A");
-            System.out.println(hm.toString());
+            GrafoPesato<String> hm = g.prim("A");
+            hm.printGraphDef();
 
             /*
             g.printGraphDef();  // Cosa ne pensi ?

@@ -176,7 +176,7 @@ public class PriorityQueue <T>
         return list.contains(e);
     }
 
-    public Element<T> getElem(Object x)
+    public Element<T> getElem(T x)
     {
         for(Element<T> e : list)
         {
@@ -186,7 +186,7 @@ public class PriorityQueue <T>
         return null;
     }
 
-    public int getPosElem(Object x)
+    public int getPosElem(T x)
     {
         int i = 0;
         for(Element<T> e: list)

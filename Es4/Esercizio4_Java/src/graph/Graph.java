@@ -2,7 +2,7 @@ package graph;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.Map;
 import priorityqueue.*;
 
 /**
@@ -11,22 +11,11 @@ import priorityqueue.*;
  */
 public class Graph<T,V>
 {
-    private int nNode;
-    private int nArch;
-    private HashMap<T,HashMap<T,V>> adiacentsMap;
-    private Comparator<T> comp; //Non usato
-    private Comparator<V> comp2; //Non usato
-    private boolean isDirect;
+    protected int nNode;
+    protected int nArch;
+    protected HashMap<T,HashMap<T,V>> adiacentsMap;
     
-    public Graph(boolean isDirect,Comparator<T> comparator,Comparator<V> comp2) // A cosa serve il comparator ???
-    {
-        this.adiacentsMap = new HashMap<T,HashMap<T,V>>();  //non può essere null se no Nullpointer exception
-        this.nNode = 0;  
-        this.nArch = 0;
-        this.isDirect = isDirect;
-        this.comp = comparator;
-        this.comp2 = comp2;
-    }
+    protected boolean isDirect;
 
     public Graph(boolean isDirect)
     {
@@ -93,27 +82,6 @@ public class Graph<T,V>
             throw new GraphException("Failed to remove Arch "+from + to+"don't exist");
     }
 
-    public double Weight() throws Error, GraphException
-    {
-        double result = 0; //Non sono sicuro della bontà di questa soluzione
-        if(this.isEmpty() || this == null)
-            throw new GraphException("This graph can't be empty or null");
-        
-        for(HashMap<T, V> temp : adiacentsMap.values()){
-            for (Object value : temp.values()) { //Se label degli archi != double fallisce
-                if (value instanceof Double)
-                    result = result + (double)value;
-                else
-                    throw new Error("This graph has no Weight because label is: " + value.getClass());
-            }
-        }
-
-        if(result > 0)
-            return isDirect ? result : result / 2;
-        else
-            return result;
-    }
-
     /**
      * Stampa del grafo piu' chiara 
      */
@@ -172,74 +140,5 @@ public class Graph<T,V>
         return adiacentsMap.get(u).get(v);
     }
 
-    public Graph<T, V> prim(T root) throws GraphException, PriorityQueueException
-    {
-        if (isDirect)
-            throw new GraphException("Prim only works with not direct graph");
-        Graph<T, V> resultingGraph = new Graph<T, V>(false, this.comp, this.comp2);
-
-        // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
-        PriorityQueue<T> pq = new PriorityQueue<T>();
-
-        // Vado a settare tutti i nodi nella coda di priorità con massima priorità
-        initPq(pq,root);
-      
-        pq.printList();  //Temporaneo
-
-        while(pq.getnElem() != 0)
-        {
-            Element<T> u = pq.extractMin();
-            addToResultingGraph(resultingGraph,u);
-            
-            System.out.println(u.getName());
-
-            HashMap<T,V> hm = getAdiacent(u.getName());
-
-            System.out.println(hm.toString());
-
-            for (T v : hm.keySet())
-            {
-                System.out.println("U: "+u.getName()+ " V: "+v);
-                if(pq.getPosElem(v) >= 0 && comp2.compare(getWeightArch(u.getName(),v),(V)(Object)pq.getElem(v).getKey()) < 0)
-                    pq.changeKeyParent(pq.getPosElem(v),(double)(Object)getWeightArch(u.getName(),v) , u.getName());
-            }
-            pq.printList();
-        }
-        return resultingGraph;        
-    }
-
-    private void addToResultingGraph(Graph<T, V> res,Element<T> x) //TODO  le istruzioni dentro l'if;
-    {
-        //res.put(x.getName(),new HashMap<T,V>());
-        res.addNode(x.getName());
-        if (x.getValue() != null)
-        {
-            //res.get(x.getName()).put(x.getValue(),(V)(Object)x.getKey());
-            res.get(x.getValue()).put(x.getName(),(V)(Object)x.getKey());
-        }
-            
-    }
-
-    private void initPq(PriorityQueue<T> pq,T root)
-    {
-        for(T node: adiacentsMap.keySet())
-            {
-                if (comp.compare(node,root) == 0)
-                    pq.insert(new Element<T>(0, null, node));                
-                else
-                    pq.insert(new Element<T>(Double.MAX_VALUE, null, node));
-            }
-    }
-
-    /*
-     * Stampa poco significativa
-     *
-    public void printGraph() //TODO REMOVE
-    {
-        System.out.println(adiacentsMap.toString());
-    }
-    */
-
-
-    //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
+        //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 }
