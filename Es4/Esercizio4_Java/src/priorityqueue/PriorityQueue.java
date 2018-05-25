@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * @author : Alberto Costamagna, Damiano Gianotti
+ * @param T: Type of the elment 
  */
 public class PriorityQueue <T>
 {

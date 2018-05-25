@@ -4,10 +4,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import priorityqueue.*;
+import java.util.ArrayList;
 
 /**
  * @author Costamagna Alberto e Gianotti Damiano
- * @param <T>: type of the sorted list of elements
+ * @param <T>: type of the Node
+ * @param <V>: type of the label
  */
 public class Graph<T,V>
 {
@@ -94,20 +96,59 @@ public class Graph<T,V>
         }
     }
 
-    public int archiIncidenti(T key) throws GraphException
+    public int gradoNodo(T key) throws GraphException
     {
         if(!adiacentsMap.containsKey(key))
             throw new GraphException("Invalid Node");
 
-        int count = 0;
-        for(HashMap<T, V> tmp : adiacentsMap.values())
+        int count = 0;           
+        for(T obj : adiacentsMap.get(key).keySet())
+                count++;
+        if (this.isDirect)
         {
-            for(T obj : tmp.keySet())
-                if(obj.equals(key))
-                    count++;
+            for(T tmp : adiacentsMap.keySet())
+            {
+                if (!tmp.equals(key))
+                {
+                    for(T obj : adiacentsMap.get(tmp).keySet())
+                        if(obj.equals(key))
+                            count++;
+                }
+            }
         }
 
         return count;
+    }
+
+    public ArrayList<Arch> archiIncidenti(T key) throws GraphException
+    {
+        if(!adiacentsMap.containsKey(key))
+            throw new GraphException("Invalid Node");
+        ArrayList<Arch> listArch = new ArrayList<Arch>();        
+        if (!isDirect)
+        {            
+            HashMap<T,V> hm = adiacentsMap.get(key);
+            for(T to: hm.keySet())            
+                listArch.add(new Arch<T,V>(key,to,hm.get(to)));
+            
+            return listArch;
+        }
+        else
+        {
+            for(T tmp: adiacentsMap.keySet())
+            {
+                if(!tmp.equals(key))
+                {
+                   HashMap<T,V> hm = adiacentsMap.get(tmp);
+                   for(T to: hm.keySet())
+                    if(to.equals(key))
+                        listArch.add(new Arch<T,V>(tmp,to,hm.get(to)));
+                }
+    
+            }
+            
+        }
+       return listArch;
     }
 
     public boolean sonoAdiacenti(T nodo1,T nodo2) throws GraphException

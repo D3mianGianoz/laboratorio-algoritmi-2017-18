@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import priorityqueue.*;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ * @param <T>: type of the Node
+ */
 public class GrafoPesato<T> extends Graph<T,Double>
 {
     protected Comparator<T> comp; 
