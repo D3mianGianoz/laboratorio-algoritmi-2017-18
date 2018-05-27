@@ -16,9 +16,12 @@ public class Graph<T,V>
     protected int nNode;
     protected int nArch;
     protected HashMap<T,HashMap<T,V>> adiacentsMap;
-    
     protected boolean isDirect;
 
+    /**
+     * Constructor of the Object Graph 
+     * @param isDirect: boolean with a simple job [true means the Graph is oriented, false the opposite] 
+     */
     public Graph(boolean isDirect)
     {
         this.adiacentsMap = new HashMap<T,HashMap<T,V>>();  //non può essere null se no Nullpointer exception
@@ -26,16 +29,34 @@ public class Graph<T,V>
         this.nArch = 0;
         this.isDirect = isDirect;
     }
-
+    /**
+     * @return isDirect value (true or false)
+     */
     public boolean getIsDirect()
     { return this.isDirect; }
 
+    /**
+     * @return nNode value [0,1...,n]
+     */
     public int getnNode()
     { return this.nNode; }
 
+    /**
+     * @return nArch value [0,1...,n]
+     */
     public int getnArch()
     { return this.nArch; }
 
+    /**
+     * 
+     */
+    public boolean isEmpty(){
+        return adiacentsMap.isEmpty();
+    }
+
+    /**
+     * 
+     */
     public void addNode(T value) throws GraphException
     {
         if(!adiacentsMap.containsKey(value)){
@@ -45,6 +66,9 @@ public class Graph<T,V>
             throw new GraphException("Failed to add Node: "+ value +" it is already part of Graph");
     }
 
+    /**
+     * 
+     */
     public void addArch(T from,T to,V label) throws GraphException
     {
         if(adiacentsMap.containsKey(from) && adiacentsMap.containsKey(to)){
@@ -56,10 +80,9 @@ public class Graph<T,V>
             throw new GraphException("Failed to add Arch: " + from + " or " + to + " don't exist");
     }
 
-    public boolean isEmpty(){
-        return adiacentsMap.isEmpty();
-    }
-
+    /**
+     * 
+     */
     public void removeNode(T value) throws GraphException
     {
         if(adiacentsMap.containsKey(value)){
@@ -72,6 +95,9 @@ public class Graph<T,V>
             throw new GraphException("Failed to remove Node "+ value +" don't exist");
     }
 
+    /**
+     * 
+     */
     public void removeArch(T from,T to,V label) throws GraphException
     {
         if(adiacentsMap.containsKey(from) && adiacentsMap.get(from).containsKey(to) && adiacentsMap.get(from).containsValue(label))
@@ -81,13 +107,16 @@ public class Graph<T,V>
                 adiacentsMap.get(to).remove(from,label);
         }
         else
-            throw new GraphException("Failed to remove Arch "+from + to+"don't exist");
+            throw new GraphException("Failed to remove Arch "+from + to +"don't exist");
     }
 
     /**
      * Stampa del grafo piu' chiara 
      */
     public void printGraphDef(){
+        System.out.println("Print of the "+ this);
+        if(this.isEmpty() || this == null)
+            System.out.println(this +" is empty or null !");
         for (Map.Entry<T, HashMap <T,V>> adiEntry : adiacentsMap.entrySet()){
             System.out.println("RootNode = " + adiEntry.getKey()+": ");
             HashMap<T, V> tMap = adiEntry.getValue();
@@ -96,13 +125,16 @@ public class Graph<T,V>
         }
     }
 
+    /**
+     * 
+     */
     public int gradoNodo(T key) throws GraphException
     {
         if(!adiacentsMap.containsKey(key))
-            throw new GraphException("Invalid Node");
+            throw new GraphException("Invalid Node "+ key);
 
         int count = 0;           
-        for(T obj : adiacentsMap.get(key).keySet())
+        for(T obj : adiacentsMap.get(key).keySet()) //Obj mai usata
                 count++;
         if (this.isDirect)
         {
@@ -120,11 +152,14 @@ public class Graph<T,V>
         return count;
     }
 
-    public ArrayList<Arch> archiIncidenti(T key) throws GraphException
+    /**
+     * 
+     */
+    public ArrayList<Arch<T,V>> archiIncidenti(T key) throws GraphException
     {
         if(!adiacentsMap.containsKey(key))
-            throw new GraphException("Invalid Node");
-        ArrayList<Arch> listArch = new ArrayList<Arch>();        
+            throw new GraphException("Invalid Node "+ key);
+        ArrayList<Arch<T,V>> listArch = new ArrayList<Arch<T,V>>();        
         if (!isDirect)
         {            
             HashMap<T,V> hm = adiacentsMap.get(key);
@@ -146,11 +181,13 @@ public class Graph<T,V>
                 }
     
             }
-            
         }
        return listArch;
     }
 
+    /**
+     * 
+     */
     public boolean sonoAdiacenti(T nodo1,T nodo2) throws GraphException
     {
         if(adiacentsMap.containsKey(nodo1) && adiacentsMap.containsKey(nodo2))
@@ -166,16 +203,22 @@ public class Graph<T,V>
             }
         }
         else
-            throw new GraphException("Invalid Node");
+            throw new GraphException("Invalid Nodes "+ nodo1 +" and/or "+ nodo2);
         
         return false;
     }
 
+    /**
+     * 
+     */
     public HashMap<T,V> getAdiacent(T node)
     {
         return adiacentsMap.get(node);
     }
 
+    /**
+     * 
+     */
     public V getWeightArch(T u,T v)
     {
         return adiacentsMap.get(u).get(v);

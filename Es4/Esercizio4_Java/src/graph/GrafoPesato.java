@@ -21,14 +21,14 @@ public class GrafoPesato<T> extends Graph<T,Double>
 
     public double Weight() throws Error, GraphException
     {
-        double result = 0; //Non sono sicuro della bontà di questa soluzione
+        double result = 0d;
         if(this.isEmpty() || this == null)
-            throw new GraphException("This graph can't be empty or null");
+            throw new GraphException(this +" can't be empty or null");
         
+        System.out.println("Print of Weight of "+ this);
         for(HashMap<T, Double> temp : adiacentsMap.values()){
-            for (Double value : temp.values()) { //Se label degli archi != double fallisce
+            for (Double value : temp.values()) {
                     result = result + value.doubleValue();
-                
             }
         }
 
@@ -40,40 +40,41 @@ public class GrafoPesato<T> extends Graph<T,Double>
 
     public GrafoPesato<T> prim(T root) throws GraphException, PriorityQueueException
     {
+        if(this.isEmpty() || this == null)
+            throw new GraphException(this +" can't be empty or null");
         if (isDirect)
             throw new GraphException("Prim only works with not direct graph");
-        GrafoPesato<T> resultingGraph = new GrafoPesato<T>(isDirect,this.comp);
 
+        GrafoPesato<T> resultingGraph = new GrafoPesato<T>(isDirect,this.comp);
         // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
         PriorityQueue<T> pq = new PriorityQueue<T>();
-
         // Vado a settare tutti i nodi nella coda di priorità con massima priorità
         initPq(pq,root);
       
-        pq.printList();  //Temporaneo
-
+        //pq.printList();  //Temporaneo 
         while(pq.getnElem() != 0)
         {
             Element<T> u = pq.extractMin();
             addToResultingGraph(resultingGraph,u);
             
-            System.out.println(u.getName());
-
+            //System.out.println(u.getName());
             HashMap<T,Double> hm = getAdiacent(u.getName());
 
-            System.out.println(hm.toString());
-
+            //System.out.println(hm.toString());
             for (T v : hm.keySet())
             {
-                System.out.println("U: "+u.getName()+ " V: "+v);
+                //System.out.println("U: "+u.getName()+ " V: "+v);
                 if(pq.getPosElem(v) >= 0 && getWeightArch(u.getName(),v) < pq.getElem(v).getKey())
-                    pq.changeKeyParent(pq.getPosElem(v),(double)(Object)getWeightArch(u.getName(),v) , u.getName());
+                    pq.changeKeyParent(pq.getPosElem(v), getWeightArch(u.getName(),v), u.getName());
             }
-            pq.printList();
+            //pq.printList();
         }
         return resultingGraph;        
     }
 
+    /**
+     * TODO NON LANCIA NESSSUNA ECCEZIONE !
+     */
     private void addToResultingGraph(GrafoPesato<T> res,Element<T> x) throws GraphException 
     {
         res.addNode(x.getName());
@@ -81,8 +82,7 @@ public class GrafoPesato<T> extends Graph<T,Double>
         {
             res.addArch(x.getName(),x.getValue(),x.getKey());
             res.addArch(x.getValue(),x.getName(),x.getKey());
-        }
-            
+        }   
     }
 
     private void initPq(PriorityQueue<T> pq,T root)

@@ -11,19 +11,34 @@ public class Arch <T,V>
     private T to;
     private V label;
 
-    public Arch(T f,T t,V l)
+    /**
+     * Constructor of the support class Arch
+     * @param from: 
+     * @param to:
+     * @param label:
+     */
+    public Arch(T from,T to,V label)
     {
-        this.from = f;
-        this.to = t;
-        this.label = l;
+        this.from = from;
+        this.to = to;
+        this.label = label;
     }
 
+    /**
+     * @return
+     */
     public T getFrom()
     { return this.from; }
 
+    /**
+     * @return
+     */
     public T getTo()
     { return this.to; }
 
+    /**
+     * 
+     */
     public V getLabel()
     { return this.label; }
 }

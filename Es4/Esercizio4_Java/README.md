@@ -1,4 +1,4 @@
-****COMPILAZIONE***
+**COMPILAZIONE**
 
 ----PER COMPILARE LE CLASSI PER LA STRUTTURA DATI Graph NEL PACKAGE graph---
 1) posizionarsi in .../Graph/src
@@ -13,7 +13,7 @@
 2) javac -d ../classes -cp '.;../junit-4.12.jar;../hamcrest-core-1.3.jar' graph/*.java
 
 
-***ESECUZIONE***
+**ESECUZIONE**
 
 ---PER ESEGUIRE GraphUsageJava---
 1) posizionarsi in .../Graph/classes
