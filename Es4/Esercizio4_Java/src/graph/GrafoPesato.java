@@ -55,19 +55,23 @@ public class GrafoPesato<T> extends Graph<T,Double>
         while(pq.getnElem() != 0)
         {
             Element<T> u = pq.extractMin();
-            addToResultingGraph(resultingGraph,u);
-            
-            //System.out.println(u.getName());
-            HashMap<T,Double> hm = getAdiacent(u.getName());
-
-            //System.out.println(hm.toString());
-            for (T v : hm.keySet())
+            if(u.getKey() != Double.MAX_VALUE)
             {
-                //System.out.println("U: "+u.getName()+ " V: "+v);
-                if(pq.getPosElem(v) >= 0 && getWeightArch(u.getName(),v) < pq.getElem(v).getKey())
-                    pq.changeKeyParent(pq.getPosElem(v), getWeightArch(u.getName(),v), u.getName());
+                addToResultingGraph(resultingGraph,u);
+                
+                //System.out.println(u.getName());
+                HashMap<T,Double> hm = getAdiacent(u.getName());
+
+                //System.out.println(hm.toString());
+                for (T v : hm.keySet())
+                {
+                    //System.out.println("U: "+u.getName()+ " V: "+v);
+                    if(pq.getPosElem(v) >= 0 && getWeightArch(u.getName(),v) < pq.getElem(v).getKey())
+                        pq.changeKeyParent(pq.getPosElem(v), getWeightArch(u.getName(),v), u.getName());
+                }
+                //pq.printList();
             }
-            //pq.printList();
+            
         }
         return resultingGraph;        
     }

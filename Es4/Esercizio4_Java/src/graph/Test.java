@@ -15,6 +15,8 @@ public class Test {
             g.addNode("C");
             g.addNode("D");
             g.addNode("E");
+            g.addNode("F");
+            g.addNode("G");
 
             g.addArch("A","B",3d);
             g.addArch("B","C",10d);
@@ -27,12 +29,12 @@ public class Test {
             //nullGraph.addArch("C","E","bella zio"); //Test che deve fallire
             
             g.printGraphDef();
-            nullGraph.printGraphDef();
+            //nullGraph.printGraphDef();
         
-            System.out.println(g.Weight()+"\n");
+            //System.out.println(g.Weight()+"\n");
             GrafoPesato<String> hm = g.prim("A");
             hm.printGraphDef();
-            System.out.println(hm.Weight()+"\n");
+            /*System.out.println(hm.Weight()+"\n");
             System.out.println("Grado nodo A: "+g.gradoNodo("A"));
 
             ArrayList<Arch<String,Double>> list = g.archiIncidenti("A");
@@ -49,6 +51,7 @@ public class Test {
             g.removeArch("E","B",1d);
             System.out.println("\nDOPO LA RIMOZIONE DELL' ARCO D -> B\n");
             g.printGraphDef();
+            */
 
         } catch (Exception e) {
             e.getMessage();
