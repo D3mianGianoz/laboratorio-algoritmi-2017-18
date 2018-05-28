@@ -20,7 +20,7 @@ Es2/Esercizio2_Java/*.txt
 
 #ESERCIZIO 3
 Es3/Esercizio3_Java/classes
-Es3/Esercizio3_Java/src/priorityqueue/Test.java
+Es3/Esercizio3_Java/src/heap/Test.java
 Es3/Esercizio3_java/*.jar
 
 #ESERCIZIO 4
