@@ -73,7 +73,7 @@ public class GrafoPesato<T> extends Graph<T,Double>
     }
 
     /**
-     * TODO NON LANCIA NESSSUNA ECCEZIONE !
+     * TODO NON LANCIA NESSSUNA ECCEZIONE ! (NON E VERO)
      */
     private void addToResultingGraph(GrafoPesato<T> res,Element<T> x) throws GraphException 
     {

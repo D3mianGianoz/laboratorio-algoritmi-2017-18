@@ -1,6 +1,6 @@
 **COMPILAZIONE**
-javac -d ../classes/ -cp '.:../JUnit/junit-4.12.jar:../JUnit/hamcrest-core-1.3.jar' priorityqueue/*.java
+javac -d ../classes/ -cp '.:../junit-4.12.jar:../hamcrest-core-1.3.jar' heap/*.java
 
 **ESECUZIONE**
-java  -cp '.:../JUnit/junit-4.12.jar:../JUnit/hamcrest-core-1.3.jar' priorityqueue/PriorityQueueJava_TestsRunner
+java  -cp '.:../junit-4.12.jar:../hamcrest-core-1.3.jar' heap/HeapJava_TestsRunner
 
