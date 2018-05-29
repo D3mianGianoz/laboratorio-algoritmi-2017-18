@@ -57,13 +57,12 @@ public class Graph<T,V>
     /**
      * 
      */
-    public void addNode(T value) throws GraphException
+    public void addNode(T value)
     {
         if(!adiacentsMap.containsKey(value)){
             adiacentsMap.put(value,new HashMap<T,V>());
             nNode++;
-        }else
-            throw new GraphException("Failed to add Node: "+ value +" it is already part of Graph");
+        }
     }
 
     /**
