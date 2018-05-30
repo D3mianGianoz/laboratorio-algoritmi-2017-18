@@ -16,22 +16,22 @@ public class GraphUsageJava
 
     public static void main(String[] args)
     {
-        GrafoPesato<String> gp = new GrafoPesato<String>(false,new StringComparator());
+        WeightedGraph<String> gp = new WeightedGraph<String>(false, new StringComparator());
         try{
             loadFile(args[0],gp);
-            System.out.println("nNodi gp: "+gp.getnNode()+ " nArchi: "+gp.getnArch()+" weight: "+gp.weight());
-            GrafoPesato<String> primRis = gp.prim("vanchiglia");
+            System.out.println("nNodi gp: "+gp.getnNode()+ " nArchi: "+gp.getnArch()+" weight: "+gp.weight()+"\n");
+            WeightedGraph<String> primRis = gp.prim("poggiofiorito");
             System.out.println("nNodi prim: "+primRis.getnNode()+ " nArchi: "+primRis.getnArch()+" weight: "+primRis.weight());
-        }catch(Exception ex)
-        {
-            System.out.println(ex.getMessage());
+        }catch(Exception ex){  
+            ex.getMessage();
+            ex.printStackTrace();
         }
         
     }
 
 
-    private static void loadFile(String filepath,GrafoPesato<String> gp) throws IOException, NumberFormatException, GraphException {
-        System.out.println("Loading data from file...\n");
+    private static void loadFile(String filepath,WeightedGraph<String> gp) throws IOException, NumberFormatException, GraphException {
+        System.out.println("Loading data from file..."+ filepath +"\n");
 
         Path inputFilePath = Paths.get(filepath);
         try (BufferedReader fileInputReader = Files.newBufferedReader(inputFilePath, ENCODING)) {

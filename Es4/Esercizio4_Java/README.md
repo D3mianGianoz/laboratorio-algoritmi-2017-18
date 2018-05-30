@@ -17,10 +17,10 @@
 
 ---PER ESEGUIRE GraphUsageJava---
 1) posizionarsi in .../Graph/classes
-2) java graphusagejava/GraphUsageJava TODO !!!! 
+2) java graphusagejava/GraphUsageJava "italian_dist_graph.csv"
 
 
 ---PER ESEGUIRE graph/GraphJavaTestsRunner---
 1) posizionarsi in .../Graph/classes 
-2) java -cp '.;../junit-4.12.jar;../hamcrest-core-1.3.jar'  graph/GraphJavaTestsRunner
+2) java -cp '.;../junit-4.12.jar;../hamcrest-core-1.3.jar'  graph/GraphJava_TestsRunner
 

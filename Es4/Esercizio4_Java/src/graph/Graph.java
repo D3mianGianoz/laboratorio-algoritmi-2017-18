@@ -57,12 +57,13 @@ public class Graph<T,V>
     /**
      * 
      */
-    public void addNode(T value)
+    public void addNode(T value) throws GraphException
     {
         if(!adiacentsMap.containsKey(value)){
             adiacentsMap.put(value,new HashMap<T,V>());
             nNode++;
-        }
+        }else
+            throw new GraphException("Failed to add Node: "+ value);
     }
 
     /**
@@ -127,22 +128,22 @@ public class Graph<T,V>
     /**
      * 
      */
-    public int gradoNodo(T key) throws GraphException
+    public long nodeDegree(T node) throws GraphException
     {
-        if(!adiacentsMap.containsKey(key))
-            throw new GraphException("Invalid Node "+ key);
+        if(!adiacentsMap.containsKey(node))
+            throw new GraphException("Invalid Node "+ node);
 
-        int count = 0;           
-        for(T obj : adiacentsMap.get(key).keySet()) //Obj mai usata
+        long count = 0;           
+        for(T obj : adiacentsMap.get(node).keySet()) //Obj mai usata
                 count++;
         if (this.isDirect)
         {
             for(T tmp : adiacentsMap.keySet())
             {
-                if (!tmp.equals(key))
+                if (!tmp.equals(node))
                 {
                     for(T obj : adiacentsMap.get(tmp).keySet())
-                        if(obj.equals(key))
+                        if(obj.equals(node))
                             count++;
                 }
             }
@@ -154,7 +155,7 @@ public class Graph<T,V>
     /**
      * 
      */
-    public ArrayList<Arch<T,V>> archiIncidenti(T key) throws GraphException
+    public ArrayList<Arch<T,V>> incidentArchs(T key) throws GraphException
     {
         if(!adiacentsMap.containsKey(key))
             throw new GraphException("Invalid Node "+ key);
@@ -185,24 +186,24 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * @return boolean: true if from node1 you are able to reach node2 or viceversa
      */
-    public boolean sonoAdiacenti(T nodo1,T nodo2) throws GraphException
+    public boolean areAdiacent(T node1,T node2) throws GraphException
     {
-        if(adiacentsMap.containsKey(nodo1) && adiacentsMap.containsKey(nodo2))
+        if(adiacentsMap.containsKey(node1) && adiacentsMap.containsKey(node2))
         {            
-            HashMap<T, V> tmp = adiacentsMap.get(nodo1);
-            if(tmp.containsKey(nodo2))
+            HashMap<T, V> tmp = adiacentsMap.get(node1);
+            if(tmp.containsKey(node2))
                 return true;
             else
             {
-                tmp = adiacentsMap.get(nodo2);
-                if(tmp.containsKey(nodo1))
+                tmp = adiacentsMap.get(node2);
+                if(tmp.containsKey(node1))
                     return true;
             }
         }
         else
-            throw new GraphException("Invalid Nodes "+ nodo1 +" and/or "+ nodo2);
+            throw new GraphException("Invalid Nodes "+ node1 +" and/or "+ node2);
         
         return false;
     }
@@ -223,5 +224,4 @@ public class Graph<T,V>
         return adiacentsMap.get(u).get(v);
     }
 
-        //https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 }

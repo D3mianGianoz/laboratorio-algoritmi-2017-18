@@ -26,6 +26,7 @@ Es3/Esercizio3_java/*.jar
 #ESERCIZIO 4
 Es4/Esercizio4_Java/classes
 Es4/Esercizio4_Java/*.jar
+Es4/Esercizio4_java/src/graph/Test.java
 
 
 # NON CARICO I FILE PDF
