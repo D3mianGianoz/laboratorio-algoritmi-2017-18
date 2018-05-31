@@ -38,8 +38,8 @@ public class GraphUsageJava
             String line = null;
             while ((line = fileInputReader.readLine()) != null) {
                String[] lSplit = line.split(",");
-               gp.addNode(lSplit[0]);
-               gp.addNode(lSplit[1]);
+               gp.addNodeNoFlag(lSplit[0]);
+               gp.addNodeNoFlag(lSplit[1]);
                gp.addArch(lSplit[0],lSplit[1],Double.parseDouble(lSplit[2]));
             }
         }

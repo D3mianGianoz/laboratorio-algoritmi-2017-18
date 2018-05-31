@@ -67,9 +67,35 @@ public class Graph<T,V>
     }
 
     /**
-     *  NON METTERE L' ECCEZIONE SE NO L'USAGE NON FUNZIONA perche ogni volta che vuole reinserire un doppione manda l' errore
+     * 
      */
-    public void addNode(T value) 
+    public boolean equals(Graph<T, V> other){
+        if (other == this)
+            return true;
+        if (!(other instanceof Graph))
+            return false;
+        if(this.adiacentsMap.equals(other.adiacentsMap) && this.isDirect == other.isDirect)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * 
+     */
+    public void addNode(T value) throws GraphException
+    {
+        if(!adiacentsMap.containsKey(value)){
+            adiacentsMap.put(value,new HashMap<T,V>());
+            nNode++;
+        }else
+            throw new GraphException("Failed to add Node: "+ value);
+    }
+
+    /**
+     * 
+     */
+    public void addNodeNoFlag(T value)
     {
         if(!adiacentsMap.containsKey(value)){
             adiacentsMap.put(value,new HashMap<T,V>());
@@ -119,10 +145,8 @@ public class Graph<T,V>
         if(adiacentsMap.containsKey(from) && adiacentsMap.get(from).containsKey(to) && adiacentsMap.get(from).containsValue(label))
         {
             adiacentsMap.get(from).remove(to,label);
-            if (!isDirect){
+            if (!isDirect)
                 adiacentsMap.get(to).remove(from,label);
-                nArch--;
-            }
             nArch--;
         }
         else
@@ -177,16 +201,16 @@ public class Graph<T,V>
     /**
      * 
      */
-    public ArrayList<Arch<T,V>> incidentArchs(T key) throws GraphException
+    public ArrayList<Arch<T,V>> incidentArchs(T node) throws GraphException
     {
-        if(!adiacentsMap.containsKey(key))
-            throw new GraphException("Invalid Node "+ key);
+        if(!adiacentsMap.containsKey(node))
+            throw new GraphException("Invalid Node "+ node);
         ArrayList<Arch<T,V>> listArch = new ArrayList<Arch<T,V>>();        
         if (!isDirect)
         {            
-            HashMap<T,V> hm = adiacentsMap.get(key);
+            HashMap<T,V> hm = adiacentsMap.get(node);
             for(T to: hm.keySet())            
-                listArch.add(new Arch<T,V>(key,to,hm.get(to)));
+                listArch.add(new Arch<T,V>(node,to,hm.get(to)));
             
             return listArch;
         }
@@ -194,11 +218,11 @@ public class Graph<T,V>
         {
             for(T tmp: adiacentsMap.keySet())
             {
-                if(!tmp.equals(key))
+                if(!tmp.equals(node))
                 {
                    HashMap<T,V> hm = adiacentsMap.get(tmp);
                    for(T to: hm.keySet())
-                    if(to.equals(key))
+                    if(to.equals(node))
                         listArch.add(new Arch<T,V>(tmp,to,hm.get(to)));
                 }
     

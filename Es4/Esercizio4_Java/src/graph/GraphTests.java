@@ -6,6 +6,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -84,10 +87,12 @@ public class GraphTests
 
     @Test
     public void isEmptyE(){
-
-        emptyGraph.addNode(true);
-        assertFalse(emptyGraph.isEmpty());
-       
+        try {
+            emptyGraph.addNode(true);
+            assertFalse(emptyGraph.isEmpty());
+        } catch (GraphException empty) {
+            empty.getMessage();
+        }
     }
 
     @Test
@@ -140,7 +145,7 @@ public class GraphTests
             temp.removeNode(11);
             temp.removeNode(3);
             assertTrue(temp.getnNode() == simpleGraph.getnNode() - 2);
-            assertTrue(temp.getnArch() == simpleGraph.getnNode() - 4);
+            assertTrue(temp.getnArch() == simpleGraph.getnArch() - 4);
         } catch (GraphException ex) {
             ex.getMessage();
         }
@@ -153,14 +158,52 @@ public class GraphTests
             temp.addNode(true); 
             temp.removeNode(true);
             assertTrue(temp.getnNode() == emptyGraph.getnNode());
-            assertTrue(temp.getnArch() == emptyGraph.getnNode());
+            assertTrue(temp.getnArch() == emptyGraph.getnArch());
         } catch (GraphException ex) {
             ex.getMessage();
         }
     }
 
     @Test
-    public void corretct_NodeDegreeW(){
+    public void RemoveArchW(){
+        try {
+            WeightedGraph<String> temp =  new WeightedGraph<String>(weightedGraph);
+            temp.removeArch("A", "D", 9d);
+            temp.removeArch("E", "C", 6d);
+            assertTrue(temp.getnArch() == weightedGraph.getnArch() - 2);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void RemoveArchS(){
+        try {
+            Graph<Integer, String> temp =  new Graph<Integer, String>(simpleGraph); 
+            temp.removeArch(1, 3, "Questo");
+            temp.removeArch(11, 7, "un");
+            assertTrue(temp.getnArch() == simpleGraph.getnArch() - 2);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void RemoveArchE(){
+        try {
+            Graph<Object, Object> temp =  new Graph<Object, Object>(emptyGraph);
+            temp.addNode(true); 
+            temp.addNode(false);
+            temp.addArch(true, false, 'c');
+            temp.removeArch(false, true, 'c');
+            assertTrue(temp.getnArch() == emptyGraph.getnArch());
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void correct_NodeDegreeW(){
         try {
             assertTrue(weightedGraph.nodeDegree("E") == 2);
         } catch (GraphException ex) {
@@ -169,7 +212,7 @@ public class GraphTests
     }
 
     @Test
-    public void corretct_NodeDegreeS(){
+    public void correct_NodeDegreeS(){
         try {
             assertTrue(simpleGraph.nodeDegree(7) == 4);
         } catch (GraphException ex) {
@@ -178,7 +221,7 @@ public class GraphTests
     }
 
     @Test
-    public void corretct_NodeDegreeE(){
+    public void correct_NodeDegreeE(){
         try {
             emptyGraph.addNode(true);
             assertTrue(emptyGraph.nodeDegree(true) == 0);
@@ -217,6 +260,40 @@ public class GraphTests
         }
     }
 
+    @Test
+    public void incidentArchW(){
+        try {
+            ArrayList<Arch<String, Double>> expectedList = new ArrayList<Arch<String, Double>>();
+            expectedList.add(new Arch<String, Double>("E", "C", 6d));
+            expectedList.add(new Arch<String, Double>("E", "D", 7d));
+            ArrayList<Arch<String,Double>> resultList = weightedGraph.incidentArchs("E");
+            int i = 0;
+            boolean res = false;
+            for (Arch<String, Double> arch : expectedList) {
+                System.out.println(arch.equals(resultList.get(i)));
+                if (arch.equals(resultList.get(i)))
+                    res = true;
+            }
+            //resultList.forEach(arch->System.out.println(arch.getFrom() +" "+ arch.getTo()+" "+ arch.getLabel()));
+            //expectedList.forEach(arch->System.out.println(arch.getFrom() +" "+ arch.getTo()+" "+ arch.getLabel()));
+            assertTrue(res);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void Prim(){
+        try {
+            WeightedGraph<String> expectGraph = new WeightedGraph<String>(weightedGraph);
+            expectGraph.removeArch("A", "D", 9d);
+            expectGraph.removeArch("C", "K", 50d);
+            WeightedGraph<String> resGraph = weightedGraph.prim("A");
+            assertTrue(expectGraph.equals(resGraph));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
 
     @Test
     public void correctWeight(){
@@ -229,4 +306,7 @@ public class GraphTests
         }
     }
 
+    public void full(ArrayList<Arch<String, Double>> list){
+
+    }
 }

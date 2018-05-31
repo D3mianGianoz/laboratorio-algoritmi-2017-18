@@ -41,4 +41,16 @@ public class Arch <T,V>
      */
     public V getLabel()
     { return this.label; }
+
+    public boolean equals(Arch<T, V> otherArch){
+        if (otherArch == this)
+            return true;
+        if (!(otherArch instanceof Arch))
+            return false;
+        if(this.from == otherArch.from && this.to == otherArch.to && this.label == otherArch.label)
+            return true;
+        else
+            return false;
+
+    }
 }
