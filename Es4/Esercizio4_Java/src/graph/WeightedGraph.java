@@ -71,7 +71,7 @@ public class WeightedGraph<T> extends Graph<T,Double>
             {
                 //System.out.println("U: "+u.getName()+ " V: "+v);
                 if(pq.getPosElem(v) >= 0 && getWeightArch(u.getName(),v) < pq.getElem(v).getKey())
-                    pq.changeKeyParent(pq.getPosElem(v), getWeightArch(u.getName(),v), u.getName());
+                    pq.decreaseKeyParent(pq.getPosElem(v), getWeightArch(u.getName(),v), u.getName());
             }
             //pq.printList();
         }

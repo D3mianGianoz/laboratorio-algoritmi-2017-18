@@ -23,9 +23,9 @@ public class HeapTests
     }
 
     @Test
-    public void changeKey_Test() {
+    public void increaseKey_Test() {
         try {
-            pq.changeKey(1,90);
+            pq.increaseKey(1,90);
             assertTrue((Integer)pq.getMax().getKey() == 90);            
         } catch (HeapException ex) {
             System.out.println("Error");

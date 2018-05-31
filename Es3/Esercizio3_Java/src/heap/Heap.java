@@ -36,7 +36,7 @@ public class Heap <K,T>
         nElem++;
         list.add(elem);
         try{
-            changeKey(nElem,elem.getKey());    
+            increaseKey(nElem,elem.getKey());    
         } catch(HeapException ex)
         {
             ex.getMessage();
@@ -50,9 +50,11 @@ public class Heap <K,T>
      * @param i: the index of the selected element
      * @param k: the new value of the key
      */
-    public void changeKey(int i,K k) throws HeapException
+    public void increaseKey(int i,K k) throws HeapException
     {
         i--;
+        if (comp.compare(k, list.get(i).getKey()) < 0)
+            throw new HeapException("Key is less than the current key");
         list.get(i).setKey(k);
         while(i > 0 &&comp.compare(list.get(parent(i)).getKey(),list.get(i).getKey()) < 0)
         {

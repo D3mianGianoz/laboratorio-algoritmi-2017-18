@@ -11,7 +11,6 @@ import java.io.IOException;
 public class PriorityQueue <T>
 {
     private ArrayList<Element<T>> list;
-    private int nElem; 
 
     /**
      * Constructor of the PriorityQueue class
@@ -19,11 +18,10 @@ public class PriorityQueue <T>
     public PriorityQueue()
     {
         list = new ArrayList<Element<T>>();
-        nElem = 0;
     }
 
     public int getnElem()
-    { return this.nElem; }
+    {return this.list.size();}
 
     /**
      * Method that allows to insert a new element in the queue
@@ -31,15 +29,15 @@ public class PriorityQueue <T>
      */
     public void insert(Element<T> elem)
     {
-        nElem++;
-        Element<T> e = new Element<T>(Double.MIN_VALUE,elem.getValue(),elem.getName());
-        list.add(e);
-        try{
-            changeKey(nElem,elem.getKey());    
-        } catch(PriorityQueueException ex)
+        list.add(elem);
+        int i = list.size()-1;
+        int parent = parent(i);
+
+        while(parent != i && list.get(i).getKey() < list.get(parent).getKey())
         {
-            ex.getMessage();
-            ex.printStackTrace();
+            swap(i,parent);
+            i = parent;
+            parent = parent(i);
         }
         
     }
@@ -49,25 +47,37 @@ public class PriorityQueue <T>
      * @param i: the index of the selected element
      * @param k: the new value of the key
      */
-    public void changeKey(int i,double k) throws PriorityQueueException
+    public void decreaseKey(int i,double k) throws PriorityQueueException
     {
         i--;
+        if (list.get(i).getKey() < k)
+            throw new PriorityQueueException("Key not valid");
+
         list.get(i).setKey(k);
-        while(i > 0 && list.get(parent(i)).getKey() > list.get(i).getKey())
+        int parent = parent(i);
+
+        while(i > 0 && list.get(parent).getKey() > list.get(i).getKey())
         {
-            swap(i,parent(i));
-            i = parent(i);
+            swap(i,parent);
+            i = parent;
+            parent = parent(parent);
         }
     }
 
-    public void changeKeyParent(int i,double k,T parent) throws PriorityQueueException
+    public void decreaseKeyParent(int i,double k,T p) throws PriorityQueueException
     {
+        if (list.get(i).getKey() < k)
+            throw new PriorityQueueException("Key not valid");
+
         list.get(i).setKey(k);
-        list.get(i).setValue(parent);
-        while(i > 0 && list.get(parent(i)).getKey() > list.get(i).getKey())
+        list.get(i).setValue(p);
+        int parent = parent(i);
+
+        while(i > 0 && list.get(parent).getKey() > list.get(i).getKey())
         {
-            swap(i,parent(i));
-            i = parent(i);
+            swap(i,parent);
+            i = parent;
+            parent = parent(parent);
         }
     }
 
@@ -76,36 +86,48 @@ public class PriorityQueue <T>
      */
     public Element<T> extractMin() throws PriorityQueueException
     {
-        if (nElem < 1)
-            throw new PriorityQueueException("Error empty list");
-        Element<T> max = getMin();
-        list.set(0,list.get(--nElem));
-        minHeapfy(0);
+        if (list.size() == 0) {
 
-        return max;
+            throw new PriorityQueueException("MinHeap is EMPTY");
+        } else if (list.size() == 1) {
+
+            Element<T> min = list.remove(0);
+            return min;
+        }
+
+        // remove the last item ,and set it as new root
+        Element<T> min = list.get(0);
+        Element<T> lastItem = list.remove(list.size() - 1);
+        list.set(0, lastItem);
+
+        // bubble-down until heap property is maintained
+        minHeapify(0);
+
+        // return min key
+        return min;
     }
 
     /**
      * Put on the top the element with the hightes value of key
      */
-    private void minHeapfy(int i)
+    private void minHeapify(int i)
     {
         int l = left(i);
         int r = right(i);
-        int massimo;
+        int min;
 
-        if (l<= nElem && list.get(l).getKey() < list.get(i).getKey())
-            massimo = l;
+        if (l<= list.size()-1 && list.get(l).getKey() < list.get(i).getKey())
+            min = l;
         else
-            massimo = r;
+            min = i;
 
-        if (r <= nElem && list.get(r).getKey() < list.get(massimo).getKey())
-            massimo = r;
+        if (r <= list.size()-1 && list.get(r).getKey() < list.get(min).getKey())
+            min = r;
 
-        if (massimo != i)
+        if (min != i)
         {
-            swap(i,massimo);
-            minHeapfy(massimo);
+            swap(i,min);
+            minHeapify(min);
         }
     }
 
@@ -133,11 +155,11 @@ public class PriorityQueue <T>
      * @return: the parent index of the given index
      */
     private int parent(int i)
-    {
-        if (i > 0 && i <= nElem)
-            return i/2;
-        return 0;
-            
+    {       
+        if (i % 2 == 1) {
+            return i / 2;
+        }
+        return (i - 1) / 2;            
     }
 
     /**
@@ -145,10 +167,7 @@ public class PriorityQueue <T>
      */
     private int left(int i)
     {
-        if (2*i <= nElem)
-            return 2*i;
-        else
-            return i;
+        return 2 * i + 1;
         
     }
 
@@ -157,10 +176,7 @@ public class PriorityQueue <T>
      */
     private int right(int i)
     {
-        if ((2*i)+1 <= nElem)
-            return (2*i)+1;
-        else
-            return i;      
+        return 2 * i + 2;     
     }
 
     /**
@@ -168,7 +184,7 @@ public class PriorityQueue <T>
      */
     public void printList()
     {
-        for (int i=0;i< nElem ;i++)
+        for (int i=0;i< list.size() ;i++)
             System.out.println(list.get(i).toString());
     }
 

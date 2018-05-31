@@ -84,12 +84,10 @@ public class GraphTests
 
     @Test
     public void isEmptyE(){
-        try {
-            emptyGraph.addNode(true);
-            assertFalse(emptyGraph.isEmpty());
-        } catch (GraphException empty) {
-            empty.getMessage();
-        }
+
+        emptyGraph.addNode(true);
+        assertFalse(emptyGraph.isEmpty());
+       
     }
 
     @Test
