@@ -29,6 +29,18 @@ public class Graph<T,V>
         this.nArch = 0;
         this.isDirect = isDirect;
     }
+
+    /**
+     * Constructor of the Object Graph used to "clone"
+     * @param clone: the Object Graph used as source of the "cloning" process
+     */
+    public Graph(Graph<T,V> clone)
+    {
+        this.adiacentsMap = clone.adiacentsMap;
+        this.nNode = clone.nNode;
+        this.nArch = clone.nArch;
+        this.isDirect = clone.isDirect;
+    }
     /**
      * @return isDirect value (true or false)
      */
@@ -86,10 +98,15 @@ public class Graph<T,V>
     public void removeNode(T value) throws GraphException
     {
         if(adiacentsMap.containsKey(value)){
-            adiacentsMap.remove(value);
             for (HashMap<T, V> temp: adiacentsMap.values())
-                if (temp.containsKey(value))
+                if (temp.containsKey(value)){
                     temp.remove(value);
+                    nArch--;
+                }
+            if(this.isDirect)
+                nArch = nArch - adiacentsMap.get(value).size();
+            adiacentsMap.remove(value);
+            nNode--;
         }
         else
             throw new GraphException("Failed to remove Node "+ value +" don't exist");
@@ -103,8 +120,11 @@ public class Graph<T,V>
         if(adiacentsMap.containsKey(from) && adiacentsMap.get(from).containsKey(to) && adiacentsMap.get(from).containsValue(label))
         {
             adiacentsMap.get(from).remove(to,label);
-            if (!isDirect)
+            if (!isDirect){
                 adiacentsMap.get(to).remove(from,label);
+                nArch--;
+            }
+            nArch--;
         }
         else
             throw new GraphException("Failed to remove Arch "+from + to +"don't exist");
@@ -133,9 +153,12 @@ public class Graph<T,V>
         if(!adiacentsMap.containsKey(node))
             throw new GraphException("Invalid Node "+ node);
 
-        long count = 0;           
-        for(T obj : adiacentsMap.get(node).keySet()) //Obj mai usata
-                count++;
+        long count = 0;
+        count = count + adiacentsMap.get(node).size();
+
+        //for(T obj : adiacentsMap.get(node).keySet()) //Obj mai usata
+        //        count++;
+
         if (this.isDirect)
         {
             for(T tmp : adiacentsMap.keySet())

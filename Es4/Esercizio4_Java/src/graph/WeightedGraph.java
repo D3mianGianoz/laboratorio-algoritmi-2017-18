@@ -19,6 +19,11 @@ public class WeightedGraph<T> extends Graph<T,Double>
         this.comp = comp; 
     }
 
+    public WeightedGraph(WeightedGraph<T> clone)
+    {
+        super(clone);
+    }
+
     public double weight() throws Error, GraphException
     {
         double result = 0d;

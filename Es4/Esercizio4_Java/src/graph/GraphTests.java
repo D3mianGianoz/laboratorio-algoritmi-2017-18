@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -119,6 +120,45 @@ public class GraphTests
     @Test
     public void correct_NumArchsE(){
         assertTrue(emptyGraph.getnArch() == 0);
+    }
+
+    @Test
+    public void RemoveNodeW(){
+        try {
+            WeightedGraph<String> temp =  new WeightedGraph<String>(weightedGraph);
+            temp.removeNode("E");
+            temp.removeNode("K");
+            assertTrue(temp.getnNode() == weightedGraph.getnNode() - 2);
+            assertTrue(temp.getnArch() == weightedGraph.getnArch() - 4);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void RemoveNodeS(){
+        try {
+            Graph<Integer, String> temp =  new Graph<Integer, String>(simpleGraph); 
+            temp.removeNode(11);
+            temp.removeNode(3);
+            assertTrue(temp.getnNode() == simpleGraph.getnNode() - 2);
+            assertTrue(temp.getnArch() == simpleGraph.getnNode() - 4);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void RemoveNodeE(){
+        try {
+            Graph<Object, Object> temp =  new Graph<Object, Object>(emptyGraph);
+            temp.addNode(true); 
+            temp.removeNode(true);
+            assertTrue(temp.getnNode() == emptyGraph.getnNode());
+            assertTrue(temp.getnArch() == emptyGraph.getnNode());
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
     }
 
     @Test
