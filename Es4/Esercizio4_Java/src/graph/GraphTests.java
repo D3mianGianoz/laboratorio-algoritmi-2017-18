@@ -270,13 +270,50 @@ public class GraphTests
             int i = 0;
             boolean res = false;
             for (Arch<String, Double> arch : expectedList) {
-                System.out.println(arch.equals(resultList.get(i)));
                 if (arch.equals(resultList.get(i)))
                     res = true;
             }
-            //resultList.forEach(arch->System.out.println(arch.getFrom() +" "+ arch.getTo()+" "+ arch.getLabel()));
-            //expectedList.forEach(arch->System.out.println(arch.getFrom() +" "+ arch.getTo()+" "+ arch.getLabel()));
             assertTrue(res);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void incidentArchS(){ 
+        try {
+            ArrayList<Arch<Integer, String>> expectedList = new ArrayList<Arch<Integer, String>>();
+            expectedList.add(new Arch<Integer, String>(1, 7, "esempio"));
+            expectedList.add(new Arch<Integer, String>(11, 7, "un"));
+            ArrayList<Arch<Integer, String>> resultList = simpleGraph.incidentArchs(7);
+            int i = 0;
+            boolean res = false;
+            for (Arch<Integer, String> arch : expectedList) {
+                if (arch.equals(resultList.get(i)))
+                    res = true;
+            }
+            assertTrue(res);
+        } catch (GraphException ex) {
+            ex.getMessage();
+        }
+    }
+
+    @Test
+    public void incidentArchE(){ 
+        try {
+            emptyGraph.addNode(3f);
+            emptyGraph.addNode(15.4f);
+            emptyGraph.addArch(3f, 15.4f, false);
+            ArrayList<Arch<Float, Boolean>> expectedList = new ArrayList<Arch<Float, Boolean>>();
+            expectedList.add(new Arch<Float,Boolean>(3f, 15.4f, true));
+            ArrayList<Arch<Object, Object>> resultList = emptyGraph.incidentArchs(15.4f);
+            int i = 0;
+            boolean res = false;
+            for (Arch<Float, Boolean> arch : expectedList) {
+                if (arch.equals(resultList.get(i)))
+                    res = true;
+            }
+            assertFalse(res);
         } catch (GraphException ex) {
             ex.getMessage();
         }

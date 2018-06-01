@@ -12,15 +12,29 @@ import java.util.ArrayList;
  * @param <V>: type of the label
  */
 public class Graph<T,V>
-{
+{   
+    /**
+     * the number of nodes
+    */
     protected int nNode;
+    /**
+     * the number of arches
+     */
     protected int nArch;
+    /**
+     * adiacent list of the Graph
+     * implemented using a HashMap of (T,(HashMap of T,V))
+     * @see https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html
+     */
     protected HashMap<T,HashMap<T,V>> adiacentsMap;
+    /**
+     * flag; true if the Graph is oriented false otherwise
+     */
     protected boolean isDirect;
 
     /**
-     * Constructor of the Object Graph 
-     * @param isDirect: boolean, if it is true it means the Graph is oriented, false the opposite
+     * Main constructor of the Object Graph
+     * @param isDirect: boolean, true if it Graph is oriented, false the opposite
      */
     public Graph(boolean isDirect)
     {
@@ -31,8 +45,8 @@ public class Graph<T,V>
     }
 
     /**
-     * Constructor of the Object Graph used to "clone"
-     * @param clone: the Object Graph used as source of the "cloning" process
+     * Alternative constructor of the Object Graph, used to "clone" an other Graph
+     * @param clone: the Object Graph that we want to "clone"
      */
     public Graph(Graph<T,V> clone)
     {
@@ -42,32 +56,41 @@ public class Graph<T,V>
         this.isDirect = clone.isDirect;
     }
     /**
+     * Getter for field isDirect
      * @return: isDirect value (true or false)
      */
     public boolean getIsDirect()
     { return this.isDirect; }
 
     /**
+     * Getter for field nNode
      * @return: nNode value [0,1...,n]
      */
     public int getnNode()
     { return this.nNode; }
 
     /**
+     * Getter for field nArch
      * @return: nArch value [0,1...,n]
      */
     public int getnArch()
     { return this.nArch; }
 
     /**
-     * @return: true if the Graph is empty, false otherwise
+     * Method that look if the Graph is empty.
+     * It looks the adiancent list is empty only if counters nNode nArch are equals to 0 
+     * @return: true if it's empty, false otherwise
      */
     public boolean isEmpty(){
-        return adiacentsMap.isEmpty();
+        if(nArch == 0 && nNode == 0)
+            return adiacentsMap.isEmpty();
+        else
+            return false;
     }
 
     /**
-     * @return: true if the two Graphs are equal, false otherwise
+     * Method that check if two Graph are equals
+     * @return: true if they are equals, false otherwise
      * @param other: the Graph to compare with
      */
     public boolean equals(Graph<T, V> other){
@@ -84,7 +107,7 @@ public class Graph<T,V>
     /**
      * Core function of the Graph, add a Node to the structure only if isn't already contained
      * @param value: the value of the node to be added
-     * @throws GraphException: if the param is already contained
+     * @throws graph.GraphException: if the param is already contained
      */
     public void addNode(T value) throws GraphException
     {
@@ -96,7 +119,7 @@ public class Graph<T,V>
     }
 
     /**
-     * Same function as "addNode" but it if fails it doesn't throws the Error
+     * Same function as "addNode" but if it fails it doesn't throws GraphException
      * @param value: the value of the node to be added
      */
     public void addNodeNoFlag(T value)
@@ -108,12 +131,12 @@ public class Graph<T,V>
     }
 
     /**
-     * Core function of the Graph, add a "Arch"(connection between Nodes) to the structure with a label
+     * Core function of the Graph, add an "Arch"(connection between Nodes) to the structure with a label.
      * It require that both node exist in the graph
      * @param from: Node origin
      * @param to: Node destination
      * @param label: generic value of the "Arch"
-     * @throws GraphException: if the one or both of the Node params are not in the structure
+     * @throws graph.GraphException: if the one or both of the Node params are not in the structure
      */
     public void addArch(T from,T to,V label) throws GraphException
     {
@@ -127,9 +150,9 @@ public class Graph<T,V>
     }
 
     /**
-     * Remove the Node from the Graph, only if the Node is contained
+     * Remove a Node from the Graph, only if the Node is contained
      * @param value: the Node to be removed
-     * @throws GraphException: if the param are not in the structure
+     * @throws graph.GraphException: if the param are not in the structure
      */
     public void removeNode(T value) throws GraphException
     {
@@ -149,7 +172,12 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Remove an "Arch" from the Graph, only if the parameters match an existing "Arch".
+     * It require that both node exist in the graph
+     * @param from: Node origin
+     * @param to: Node destination
+     * @param label: generic value of the "Arch" 
+     * @throws graph.GraphException: if the params didn't match
      */
     public void removeArch(T from,T to,V label) throws GraphException
     {
@@ -165,13 +193,20 @@ public class Graph<T,V>
     }
 
     /**
-     * Stampa del grafo piu' chiara 
+     * Print of the Graph using his adiancentlist.
+     * 
+     * Example
+     * 
+     * RootNode = someNode:
+     * someNode -> someLabel -> otherNode
      */
     public void printGraphDef(){
-        System.out.println("Print of the "+ this);
-        if(this.isEmpty() || this == null)
+        if(this.isEmpty() || this == null){
             System.out.println(this +" is empty or null !");
+            return;
+        }
 
+        System.out.println("Print of the "+ this);
         for (Map.Entry<T, HashMap <T,V>> adiEntry : adiacentsMap.entrySet()){
             System.out.println("RootNode = " + adiEntry.getKey()+": ");
             HashMap<T, V> tMap = adiEntry.getValue();
@@ -181,7 +216,12 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Indirected graph: the degree of a Node is the number of arcs that depart from it.
+     * Directed graph: the incoming (outgoing) degree of a Node is the number of edges accidents in (from) it 
+     * the total degree of a Node is the sum of this two
+     * @param node: the Node whose degree must be calculated
+     * @return: the degree of the node [0,..,n]
+     * @throws graph.GraphException: if the Node don't exist
      */
     public long nodeDegree(T node) throws GraphException
     {
@@ -190,9 +230,6 @@ public class Graph<T,V>
 
         long count = 0;
         count = count + adiacentsMap.get(node).size();
-
-        //for(T obj : adiacentsMap.get(node).keySet()) //Obj mai usata
-        //        count++;
 
         if (this.isDirect)
         {
@@ -206,17 +243,22 @@ public class Graph<T,V>
                 }
             }
         }
-
         return count;
     }
 
     /**
-     * 
+     * An Arch and a Node on that Arch are called incident.
+     * This method create an ArrayList of Object graph.Arch that are incident to a Node
+     * @param node: the chosen Node
+     * @return: an ArrayList of Arch<T, V> 
+     * @throws graph.GraphException: if the Node don't exist
+     * @see https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html
      */
-    public ArrayList<Arch<T,V>> incidentArchs(T node) throws GraphException
+    public ArrayList<Arch<T,V>> incidentArches(T node) throws GraphException
     {
         if(!adiacentsMap.containsKey(node))
             throw new GraphException("Invalid Node "+ node);
+
         ArrayList<Arch<T,V>> listArch = new ArrayList<Arch<T,V>>();        
         if (!isDirect)
         {            
@@ -244,7 +286,12 @@ public class Graph<T,V>
     }
 
     /**
-     * @return boolean: true if from node1 you are able to reach node2 or viceversa
+     * Two Nodes of a graph are called adjacent if they share a common Arch.
+     * This method looks if from node1 you are able to reach node2 or not 
+     * @param node1: Node origin
+     * @param node2: Node destination
+     * @return boolean: true if  you are able, false viceversa
+     * @throws graph.GraphException: if the Nodes don't exist
      */
     public boolean areAdiacent(T node1,T node2) throws GraphException
     {
@@ -267,7 +314,9 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Getter: it returns the list of all adiacent Nodes
+     * @return: HashMap<T,V> containg all adiacent Nodes
+     * @param node: the chosen Node
      */
     public HashMap<T,V> getAdiacent(T node)
     {
@@ -275,11 +324,14 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Getter: it returns the label of the Arch beetwen two Nodes
+     * @return: V the type of label
+     * @param from: Node origin
+     * @param to: Node destination
      */
-    public V getWeightArch(T u,T v)
+    public V getLabelArch(T from,T to)
     {
-        return adiacentsMap.get(u).get(v);
+        return adiacentsMap.get(from).get(to);
     }
 
 }

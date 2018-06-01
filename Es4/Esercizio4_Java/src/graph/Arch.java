@@ -7,8 +7,17 @@ package graph;
  */
 public class Arch <T,V>
 {
+    /**
+     * 
+     */
     private T from;
+    /**
+     * 
+     */
     private T to;
+    /**
+     * 
+     */
     private V label;
 
     /**
@@ -25,29 +34,34 @@ public class Arch <T,V>
     }
 
     /**
-     * @return
+     * @return:
      */
     public T getFrom()
     { return this.from; }
 
     /**
-     * @return
+     * @return:
      */
     public T getTo()
     { return this.to; }
 
     /**
-     * 
+     * @return:
      */
     public V getLabel()
     { return this.label; }
 
+    /**
+     * Method that check if two Arches are equals
+     * @return: true if they are equals, false otherwise
+     * @param other: the Arch to compare with
+     */
     public boolean equals(Arch<T, V> otherArch){
         if (otherArch == this)
             return true;
         if (!(otherArch instanceof Arch))
             return false;
-        if(this.from == otherArch.from && this.to == otherArch.to && this.label == otherArch.label)
+        if(this.from.equals(otherArch.from) && this.to.equals(otherArch.to) && this.label.equals(otherArch.label))
             return true;
         else
             return false;
