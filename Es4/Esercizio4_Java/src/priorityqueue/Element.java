@@ -13,8 +13,9 @@ public class Element <T>
 
     /**
      * Constructor of the object element
-     * @param key: Value of the key of the element
-     * @param value: Value of the value of the elment
+     * @param key: Value of the generic key of the element
+     * @param value: Generic value of the elment
+     * @param name: Generic "id"(name) of the element
      */
     public Element(double key,T value, T name)
     {

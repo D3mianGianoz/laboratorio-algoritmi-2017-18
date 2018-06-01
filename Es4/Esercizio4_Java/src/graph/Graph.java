@@ -20,7 +20,7 @@ public class Graph<T,V>
 
     /**
      * Constructor of the Object Graph 
-     * @param isDirect: boolean with a simple job [true means the Graph is oriented, false the opposite] 
+     * @param isDirect: boolean, if it is true it means the Graph is oriented, false the opposite
      */
     public Graph(boolean isDirect)
     {
@@ -42,32 +42,33 @@ public class Graph<T,V>
         this.isDirect = clone.isDirect;
     }
     /**
-     * @return isDirect value (true or false)
+     * @return: isDirect value (true or false)
      */
     public boolean getIsDirect()
     { return this.isDirect; }
 
     /**
-     * @return nNode value [0,1...,n]
+     * @return: nNode value [0,1...,n]
      */
     public int getnNode()
     { return this.nNode; }
 
     /**
-     * @return nArch value [0,1...,n]
+     * @return: nArch value [0,1...,n]
      */
     public int getnArch()
     { return this.nArch; }
 
     /**
-     * 
+     * @return: true if the Graph is empty, false otherwise
      */
     public boolean isEmpty(){
         return adiacentsMap.isEmpty();
     }
 
     /**
-     * 
+     * @return: true if the two Graphs are equal, false otherwise
+     * @param other: the Graph to compare with
      */
     public boolean equals(Graph<T, V> other){
         if (other == this)
@@ -81,7 +82,9 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Core function of the Graph, add a Node to the structure only if isn't already contained
+     * @param value: the value of the node to be added
+     * @throws GraphException: if the param is already contained
      */
     public void addNode(T value) throws GraphException
     {
@@ -93,7 +96,8 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Same function as "addNode" but it if fails it doesn't throws the Error
+     * @param value: the value of the node to be added
      */
     public void addNodeNoFlag(T value)
     {
@@ -104,7 +108,12 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Core function of the Graph, add a "Arch"(connection between Nodes) to the structure with a label
+     * It require that both node exist in the graph
+     * @param from: Node origin
+     * @param to: Node destination
+     * @param label: generic value of the "Arch"
+     * @throws GraphException: if the one or both of the Node params are not in the structure
      */
     public void addArch(T from,T to,V label) throws GraphException
     {
@@ -118,7 +127,9 @@ public class Graph<T,V>
     }
 
     /**
-     * 
+     * Remove the Node from the Graph, only if the Node is contained
+     * @param value: the Node to be removed
+     * @throws GraphException: if the param are not in the structure
      */
     public void removeNode(T value) throws GraphException
     {
@@ -160,6 +171,7 @@ public class Graph<T,V>
         System.out.println("Print of the "+ this);
         if(this.isEmpty() || this == null)
             System.out.println(this +" is empty or null !");
+
         for (Map.Entry<T, HashMap <T,V>> adiEntry : adiacentsMap.entrySet()){
             System.out.println("RootNode = " + adiEntry.getKey()+": ");
             HashMap<T, V> tMap = adiEntry.getValue();

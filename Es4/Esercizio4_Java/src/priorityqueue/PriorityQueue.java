@@ -6,7 +6,7 @@ import java.io.IOException;
 
 /**
  * @author : Alberto Costamagna, Damiano Gianotti
- * @param T: Type of the elment 
+ * @param T: Type of the elment of the priorityQueue
  */
 public class PriorityQueue <T>
 {
@@ -109,6 +109,7 @@ public class PriorityQueue <T>
 
     /**
      * Put on the top the element with the hightes value of key
+     * @param i: index of the element
      */
     private void minHeapify(int i)
     {
@@ -141,7 +142,7 @@ public class PriorityQueue <T>
 
     /**
      * Swap the two element of the list
-     * @param i,j: the two index
+     * @param i,j: the two index of the corrisponding element
      */
     private void swap(int i,int j)
     {
@@ -152,7 +153,8 @@ public class PriorityQueue <T>
     }
 
     /**
-     * @return: the parent index of the given index
+     * @return: the parent index of the element
+     * @param i: the index of the element
      */
     private int parent(int i)
     {       
@@ -188,27 +190,39 @@ public class PriorityQueue <T>
             System.out.println(list.get(i).toString());
     }
 
-    public boolean containElement(Element<T> e)
+    /**
+     * @return: true if the queue contains the element, false otherwise
+     * @param elem: the element to check
+     */
+    public boolean containElement(Element<T> elem)
     {
-        return list.contains(e);
+        return list.contains(elem);
     }
 
-    public Element<T> getElem(T x)
+    /**
+     * @return: the element if it is contained in the queue, null otherwise
+     * @param elem: the element to check
+     */
+    public Element<T> getElem(T elem)
     {
-        for(Element<T> e : list)
+        for(Element<T> eTemp : list)
         {
-            if (e.getName() == x)
-                return e;
+            if (eTemp.getName() == elem)
+                return eTemp;
         }
         return null;
     }
 
-    public int getPosElem(T x)
+    /**
+     * @return: the position of the element if it is contained in the queue, -1  otherwise
+     * @param elem: the element to check
+     */
+    public int getPosElem(T elem)
     {
         int i = 0;
-        for(Element<T> e: list)
+        for(Element<T> eTemp: list)
         {
-            if(e.getName() == x)
+            if(eTemp.getName() == elem)
                 return i;
             i++;
         }
