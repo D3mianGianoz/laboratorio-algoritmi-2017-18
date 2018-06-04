@@ -66,7 +66,13 @@ public class WeightedGraph<T> extends Graph<T,Double>
         while(pqueue.getnElem() != 0)
         {
             Element<T> element = pqueue.extractMin();
-        
+            /*System.out.println("Name: "+element.getName()+" Key: "+element.getKey() + " Value: "+element.getValue());
+            if(element.getKey() == Double.MAX_VALUE)
+            {
+                element.setKey(0);
+                element.setValue(null);
+            }*/
+            
             addToResultingGraph(resultingGraph,element);
             
             //System.out.println(u.getName());
@@ -90,11 +96,8 @@ public class WeightedGraph<T> extends Graph<T,Double>
     private void addToResultingGraph(WeightedGraph<T> res,Element<T> elem) throws GraphException 
     {
         res.addNode(elem.getName());
-        if (elem.getValue() != null)
-        {
+        if (elem.getValue() != null)        
             res.addArch(elem.getName(),elem.getValue(),elem.getKey());
-            res.addArch(elem.getValue(),elem.getName(),elem.getKey());
-        }   
     }
 
     private void initPq(PriorityQueue<T> pqueue,T root)

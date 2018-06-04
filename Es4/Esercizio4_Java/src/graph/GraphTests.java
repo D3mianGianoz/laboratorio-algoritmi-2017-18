@@ -268,7 +268,7 @@ public class GraphTests
             ArrayList<Arch<String, Double>> expectedList = new ArrayList<Arch<String, Double>>();
             expectedList.add(new Arch<String, Double>("E", "C", 6d));
             expectedList.add(new Arch<String, Double>("E", "D", 7d));
-            ArrayList<Arch<String,Double>> resultList = weightedGraph.incidentArchs("E");
+            ArrayList<Arch<String,Double>> resultList = weightedGraph.incidentArches("E");
             int i = 0;
             boolean res = false;
             for (Arch<String, Double> arch : expectedList) {
@@ -287,7 +287,7 @@ public class GraphTests
             ArrayList<Arch<Integer, String>> expectedList = new ArrayList<Arch<Integer, String>>();
             expectedList.add(new Arch<Integer, String>(1, 7, "esempio"));
             expectedList.add(new Arch<Integer, String>(11, 7, "un"));
-            ArrayList<Arch<Integer, String>> resultList = simpleGraph.incidentArchs(7);
+            ArrayList<Arch<Integer, String>> resultList = simpleGraph.incidentArches(7);
             int i = 0;
             boolean res = false;
             for (Arch<Integer, String> arch : expectedList) {
@@ -308,7 +308,7 @@ public class GraphTests
             emptyGraph.addArch(3f, 15.4f, false);
             ArrayList<Arch<Float, Boolean>> expectedList = new ArrayList<Arch<Float, Boolean>>();
             expectedList.add(new Arch<Float,Boolean>(3f, 15.4f, true));
-            ArrayList<Arch<Object, Object>> resultList = emptyGraph.incidentArchs(15.4f);
+            ArrayList<Arch<Object, Object>> resultList = emptyGraph.incidentArches(15.4f);
             int i = 0;
             boolean res = false;
             for (Arch<Float, Boolean> arch : expectedList) {
