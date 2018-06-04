@@ -7,9 +7,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ */
 public class SortTests {
     private Integer i1, i2, i3;
     private Sort<Integer> sort;

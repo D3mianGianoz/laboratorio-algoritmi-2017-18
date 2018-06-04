@@ -1,14 +1,18 @@
 package sortusagejava;
 
-import sort.*;
+import sort.SortException;
+import sort.Sort;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ */
 public class SumInVett {
     private static final Charset ENCODING = StandardCharsets.UTF_8;
 

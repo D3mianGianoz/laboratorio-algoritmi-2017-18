@@ -1,7 +1,6 @@
 package heap;
 
 /**
- * 
  * @author : Alberto Costamagna, Damiano Gianotti
  * @param T : the type of the value field of the elment 
  */

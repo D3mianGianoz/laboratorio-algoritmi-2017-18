@@ -1,8 +1,10 @@
 package sort;
 
-import java.util.*;
 import java.util.Comparator;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ */
 public class IntegerComparator implements Comparator<Integer> {
 	@Override
 	public int compare(Integer i1, Integer i2) {

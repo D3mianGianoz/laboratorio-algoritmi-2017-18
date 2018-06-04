@@ -1,5 +1,8 @@
 package priorityqueue;
 
+/**
+ * @author : Alberto Costamagna, Damiano Gianotti
+ */
 public class Test
 {
     public static void main(String[] args)

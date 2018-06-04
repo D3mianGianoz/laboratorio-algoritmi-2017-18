@@ -11,8 +11,14 @@ import priorityqueue.*;
  */
 public class WeightedGraph<T> extends Graph<T,Double>
 {
+    /**
+     * 
+     */
     protected Comparator<T> comp; 
 
+    /**
+     * 
+     */
     public WeightedGraph(boolean isDirect,Comparator<T> comp)
     {
         super(isDirect);
@@ -24,7 +30,7 @@ public class WeightedGraph<T> extends Graph<T,Double>
         super(clone);
     }
 
-    public double weight() throws Error, GraphException
+    public double weight() throws GraphException
     {
         double result = 0d;
         if(this.isEmpty() || this == null)
@@ -52,26 +58,26 @@ public class WeightedGraph<T> extends Graph<T,Double>
 
         WeightedGraph<T> resultingGraph = new WeightedGraph<T>(isDirect,this.comp);
         // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
-        PriorityQueue<T> pq = new PriorityQueue<T>();
+        PriorityQueue<T> pqueue = new PriorityQueue<T>();
         // Vado a settare tutti i nodi nella coda di priorità con massima priorità
-        initPq(pq,root);
+        initPq(pqueue,root);
       
         //pq.printList();  //Temporaneo 
-        while(pq.getnElem() != 0)
+        while(pqueue.getnElem() != 0)
         {
-            Element<T> u = pq.extractMin();
+            Element<T> element = pqueue.extractMin();
         
-            addToResultingGraph(resultingGraph,u);
+            addToResultingGraph(resultingGraph,element);
             
             //System.out.println(u.getName());
-            HashMap<T,Double> hm = getAdiacent(u.getName());
+            HashMap<T,Double> hm = getAdiacent(element.getName());
 
             //System.out.println(hm.toString());
-            for (T v : hm.keySet())
+            for (T vElem : hm.keySet())
             {
                 //System.out.println("U: "+u.getName()+ " V: "+v);
-                if(pq.getPosElem(v) >= 0 && getWeightArch(u.getName(),v) < pq.getElem(v).getKey())
-                    pq.decreaseKeyParent(pq.getPosElem(v), getWeightArch(u.getName(),v), u.getName());
+                if(pqueue.getPosElem(vElem) >= 0 && getLabelArch(element.getName(),vElem) < pqueue.getElem(vElem).getKey())
+                    pqueue.decreaseKeyParent(pqueue.getPosElem(vElem), getLabelArch(element.getName(),vElem), element.getName());
             }
             //pq.printList();
         }
@@ -81,24 +87,24 @@ public class WeightedGraph<T> extends Graph<T,Double>
     /**
      *
      */
-    private void addToResultingGraph(WeightedGraph<T> res,Element<T> x) throws GraphException 
+    private void addToResultingGraph(WeightedGraph<T> res,Element<T> elem) throws GraphException 
     {
-        res.addNode(x.getName());
-        if (x.getValue() != null)
+        res.addNode(elem.getName());
+        if (elem.getValue() != null)
         {
-            res.addArch(x.getName(),x.getValue(),x.getKey());
-            res.addArch(x.getValue(),x.getName(),x.getKey());
+            res.addArch(elem.getName(),elem.getValue(),elem.getKey());
+            res.addArch(elem.getValue(),elem.getName(),elem.getKey());
         }   
     }
 
-    private void initPq(PriorityQueue<T> pq,T root)
+    private void initPq(PriorityQueue<T> pqueue,T root)
     {
         for(T node: adiacentsMap.keySet())
             {
                 if (comp.compare(node,root) == 0)
-                    pq.insert(new Element<T>(0, null, node));                
+                    pqueue.insert(new Element<T>(0, null, node));                
                 else
-                    pq.insert(new Element<T>(Double.MAX_VALUE, null, node));
+                    pqueue.insert(new Element<T>(Double.MAX_VALUE, null, node));
             }
     }
 

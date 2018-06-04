@@ -3,16 +3,17 @@ package editdistance;
 /**
  * @author Costamagna Alberto e Gianotti Damiano
  */
-
 public class EditDistance {
 
     /**
+     * This function counts the minimum number of operations required to transform one string into the other.
+     * 
      * @param s1,s2: two random string to be compared, not necessarily of the samelength
-     * @return: a integer rappresenting the minimum number of operations required to transform the string s2 into s1
+     * @return: a integer rappresenting the minimum number of operations
      */
 
-    public static int edit_distance(String s1, String s2) {
-
+    public static int edit_distance(String s1, String s2)
+    {
         if (s1.isEmpty())
             return s2.length();
         else if (s2.isEmpty())
@@ -23,11 +24,11 @@ public class EditDistance {
 
     /**
      * @param s1,s2: random string
-     * @return: an integer; in particular a recursive call to edit_distance
-     * if the condition is true, else a MAX_VALUE
+     * @return: an integer; in particular a recursive call to edit_distance if the
+     *          condition is true, else a MAX_VALUE
      */
 
-    private static int no_op(String s1, String s2) {
+    private static int no_op(String s1, String s2){
         if (s1.charAt(0) == s2.charAt(0))
             return edit_distance(rest(s1), rest(s2));
         return Integer.MAX_VALUE;
@@ -109,7 +110,7 @@ public class EditDistance {
      * @return: a integer rappresenting the minimum number of operations required to transform the string s2 into s1 using the matrix
      */
 
-    static int edit_distance_supp(String s1, String s2, int[][] dyn_table){
+    private static int edit_distance_supp(String s1, String s2, int[][] dyn_table){
 		if(s1.length() == 0)
 			return s2.length();
 		if(s2.length() == 0)
@@ -131,7 +132,7 @@ public class EditDistance {
      * @return: the substring obtained by ignoring the last character
      */
 
-    public static String sub(String s){
+    private static String sub(String s){
 		return s.substring(0, s.length() - 1);
 	}
 

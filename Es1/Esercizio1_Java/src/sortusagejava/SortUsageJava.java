@@ -1,14 +1,18 @@
 package sortusagejava;
 
-import sort.*;
+import sort.SortException;
+import sort.Sort;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ */
 public class SortUsageJava {
 
     private static final Charset ENCODING = StandardCharsets.UTF_8;
@@ -44,7 +48,8 @@ public class SortUsageJava {
         System.out.println("\nTime to compute: " + totalTime + "ms");
     }
 
-    private static void loadFile(String filepath, ArrayList<Long> sortlist) throws IOException {
+    private static void loadFile(String filepath, ArrayList<Long> sortlist) throws IOException
+    {
         System.out.println("Loading data from file...\n");
 
         Path inputFilePath = Paths.get(filepath);
@@ -57,15 +62,15 @@ public class SortUsageJava {
         System.out.println("Data loaded\n");
     }
 
-    private static void printInsertionSort(ArrayList<Long> insList, LongComparator longComp, Sort<Long> order)
-            throws SortException {
+    private static void printInsertionSort(ArrayList<Long> insList, LongComparator longComp, Sort<Long> order) throws SortException 
+    {
         System.out.println("This is the SortedList using algoritm Insertion Sort\n");
         order.insertionSort(insList, longComp);
         order.printArray(insList);
     }
 
-    private static void printMergeSort(ArrayList<Long> mergList, LongComparator longComp, Sort<Long> order)
-            throws SortException {
+    private static void printMergeSort(ArrayList<Long> mergList, LongComparator longComp, Sort<Long> order) throws SortException 
+    {
         System.out.println("\nThis is the SortedList using algoritm Merge Sort\n");
         order.mergeSort(mergList, 0, mergList.size() - 1, longComp);
         order.printArray(mergList);

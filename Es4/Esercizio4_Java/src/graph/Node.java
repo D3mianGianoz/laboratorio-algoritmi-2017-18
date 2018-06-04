@@ -1,5 +1,8 @@
 package graph;
 
+/**
+ * @author : Alberto Costamagna, Damiano Gianotti
+ */
 public class Node <T>
 {
     private double d;

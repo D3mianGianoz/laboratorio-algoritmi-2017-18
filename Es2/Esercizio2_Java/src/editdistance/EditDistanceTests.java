@@ -1,6 +1,6 @@
 package editdistance;
 
-import editdistance.*;
+import editdistance.EditDistance;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * @author Costamagna Alberto e Gianotti Damiano
+ */
 public class EditDistanceTests {
     private String s1, s2, word1, word2, name1, name2;
 
@@ -94,5 +97,4 @@ public class EditDistanceTests {
     {
         assertFalse(EditDistance.edit_distance_dyn(name1, name2) == 6);
     }
-
 }

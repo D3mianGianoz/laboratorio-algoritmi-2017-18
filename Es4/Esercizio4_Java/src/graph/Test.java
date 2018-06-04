@@ -3,6 +3,9 @@ package graph;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * @author : Alberto Costamagna, Damiano Gianotti
+ */
 public class Test {
     public static void main(String[] args) {       
         WeightedGraph<String> g = new WeightedGraph<String>(false,new StringComparator());

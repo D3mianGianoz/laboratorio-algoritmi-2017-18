@@ -1,6 +1,7 @@
 package sort;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Comparator;
 import sortusagejava.*;
 
@@ -35,7 +36,7 @@ public class Sort<T> {
      * Method that swap two elements of the list
      *
      * @param list: generic list of items
-     * @param i,j : the two index of the elemnts of the list to swap
+     * @param i,j: the two index of the elements of the list to swap
      */
     private void swap(List<T> list, int i, int j) {
         T temp = list.get(i);
@@ -46,7 +47,7 @@ public class Sort<T> {
     /**
      * Method that prints the array on screen
      * 
-     * @param list : list to print
+     * @param list: list to print
      */
 
     public void printArray(List<T> list) {
@@ -58,7 +59,7 @@ public class Sort<T> {
      * Method that sort the list
      * 
      * @param list: generic list of items to sort
-     * @param left,right : two index for the algorithm
+     * @param left,right: two index for the algorithm
      * @param comparator: comparator: a comparator implementing the precedence
      *        relation between the list elements.
      * @throws sort.SortException iff the parameter is null
@@ -119,26 +120,14 @@ public class Sort<T> {
 
     }
 
-    /**
-     * @param list : list to check
-     * @return true if the list is already sorted
-     */
-    private boolean isSorted(ArrayList<Long> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i) > list.get(i + 1)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
-     * Method that checks whether the sum of two elements of any list is n It
-     * manages both sorted and unsorted lists
+     * Method that checks whether the sum of two elements of any list is n.
+     * It manages both sorted and unsorted lists
+     * It use ric
      * 
      * @param list: the list to check
      * @param n: the number to check
-     * 
      * @return: true if the sum of two elements in the list is n
      */
 
@@ -146,25 +135,25 @@ public class Sort<T> {
         if (list == null)
             throw new SortException("Invalid parameters");
 
-        if (isSorted(list) == false) {
             try {
                 Sort<Long> order = new Sort<Long>();
                 order.mergeSort(list, 0, list.size() - 1, new LongComparator());
             } catch (SortException e) {
                 System.out.println("Error while sorting the array");
             }
-        }
 
-        return ricBinaria(list, n);
+        return binarySearch(list, n);
     }
 
     /**
+     * Implementation of Binary_Search(A[i...j], X)
+     * 
      * @param list: the list to check
      * @param n: the number to check
      * 
      * @return: true if the sum of two elements in the list is n
      */
-    private boolean ricBinaria(ArrayList<Long> list, long n) {
+    private boolean binarySearch(ArrayList<Long> list, long n) {
         int i = 0;
         int j = list.size() - 1;
         long somma = 0;

@@ -9,6 +9,9 @@ import java.io.*;
 import graph.*;
 import priorityqueue.*;
 
+/**
+ * @author : Alberto Costamagna, Damiano Gianotti
+ */
 public class GraphUsageJava
 {
 

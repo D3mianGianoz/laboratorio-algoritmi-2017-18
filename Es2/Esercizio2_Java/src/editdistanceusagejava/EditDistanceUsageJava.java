@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 /**
  * @author Costamagna Alberto e Gianotti Damiano
  */
-
 public class EditDistanceUsageJava {
 
     private static final Charset ENCODING = StandardCharsets.UTF_8;
@@ -57,7 +56,6 @@ public class EditDistanceUsageJava {
 
         System.out.println("Loading data from file" + filepath + "...\n");
 
-        // File inputFile = new File("filepath");
         Path inputFilePath = Paths.get(filepath);
         try (Scanner quoteScanner = new Scanner(inputFilePath)) {
             quoteScanner.useDelimiter("[^A-Za-z^]+");
@@ -70,11 +68,10 @@ public class EditDistanceUsageJava {
     }
 
     /*
-     * lista di parole con edit distance minima; Se edit > min --> non fare nulla se
-     * edit = min --> aggiungi alla lista se edit < min --> scarta la vecchia lista
+     * lista di parole con edit distance minima; Se edit > min --> non fare nulla; se
+     * edit = min --> aggiungi alla lista; se edit < min --> scarta la vecchia lista
      * e iniziane una nuova
      */
-
     private static void spellChecker(ArrayList<String> dictionary, ArrayList<String> quote) {
 
         ArrayList<String> result = new ArrayList<String>();
@@ -86,11 +83,9 @@ public class EditDistanceUsageJava {
             min = edit = EditDistance.edit_distance_dyn(word, vocable);
 
             for (k = 1; k < dictionary.size() && min != 0; k++) {
-                // System.out.println(" \t TEST :: Edit vale " + min + " al ciclo: " + i);
 
                 vocable = dictionary.get(k);
                 edit = EditDistance.edit_distance_dyn(word, vocable);
-                // edit = EditDistance.edit_distance(word, vocable);
 
                 if (edit < min) {
                     result.clear();
