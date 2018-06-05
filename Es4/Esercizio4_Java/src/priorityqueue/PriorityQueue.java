@@ -8,7 +8,7 @@ import java.io.IOException;
  * @author : Alberto Costamagna, Damiano Gianotti
  * @param T: Type of the elment of the priorityQueue
  */
-public class PriorityQueue <T>
+public class PriorityQueue<T>
 {
     private ArrayList<Element<T>> list;
 
@@ -86,11 +86,10 @@ public class PriorityQueue <T>
      */
     public Element<T> extractMin() throws PriorityQueueException
     {
-        if (list.size() == 0) {
-
+        if (list.size() == 0) 
             throw new PriorityQueueException("MinHeap is EMPTY");
-        } else if (list.size() == 1) {
 
+        if (list.size() == 1){
             Element<T> min = list.remove(0);
             return min;
         }
@@ -186,7 +185,7 @@ public class PriorityQueue <T>
      */
     public void printList()
     {
-        for (int i=0;i< list.size() ;i++)
+        for (int i=0; i< list.size() ;i++)
             System.out.println(list.get(i).toString());
     }
 
@@ -226,7 +225,6 @@ public class PriorityQueue <T>
                 return i;
             i++;
         }
-
         return -1;
     }
 

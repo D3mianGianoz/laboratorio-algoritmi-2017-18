@@ -57,6 +57,7 @@ public class WeightedGraph<T> extends Graph<T,Double>
             throw new GraphException("Prim only works with not direct graph");
 
         WeightedGraph<T> resultingGraph = new WeightedGraph<T>(isDirect,this.comp);
+        
         // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
         PriorityQueue<T> pqueue = new PriorityQueue<T>();
         // Vado a settare tutti i nodi nella coda di priorità con massima priorità
@@ -66,12 +67,11 @@ public class WeightedGraph<T> extends Graph<T,Double>
         while(pqueue.getnElem() != 0)
         {
             Element<T> element = pqueue.extractMin();
-            /*System.out.println("Name: "+element.getName()+" Key: "+element.getKey() + " Value: "+element.getValue());
-            if(element.getKey() == Double.MAX_VALUE)
-            {
+            //System.out.println("Name: "+element.getName()+" Key: "+element.getKey() + " Value: "+element.getValue());
+            if(element.getKey() == Double.MAX_VALUE){
                 element.setKey(0);
                 element.setValue(null);
-            }*/
+            }
             
             addToResultingGraph(resultingGraph,element);
             
@@ -97,7 +97,7 @@ public class WeightedGraph<T> extends Graph<T,Double>
     {
         res.addNode(elem.getName());
         if (elem.getValue() != null)        
-            res.addArch(elem.getName(),elem.getValue(),elem.getKey());
+            res.addArch(elem.getName(), elem.getValue(), elem.getKey());
     }
 
     private void initPq(PriorityQueue<T> pqueue,T root)

@@ -132,7 +132,8 @@ public class Graph<T,V>
 
     /**
      * Core function of the Graph, add an "Arch"(connection between Nodes) to the structure with a label.
-     * It require that both node exist in the graph
+     * It require that both node exist in the graph. 
+     * If the Arch is already present it does nothing; 
      * @param from: Node origin
      * @param to: Node destination
      * @param label: generic value of the "Arch"
@@ -141,10 +142,12 @@ public class Graph<T,V>
     public void addArch(T from,T to,V label) throws GraphException
     {
         if(adiacentsMap.containsKey(from) && adiacentsMap.containsKey(to)){
-            adiacentsMap.get(from).put(to,label);
-            if (!isDirect)
-                adiacentsMap.get(to).put(from,label);
-            nArch++;
+            if(!adiacentsMap.get(from).containsKey(to)){
+                adiacentsMap.get(from).put(to,label);
+                if (!isDirect)
+                    adiacentsMap.get(to).put(from,label);
+                nArch++;
+            }
         }else
             throw new GraphException("Failed to add Arch: " + from + " or " + to + " don't exist");
     }
