@@ -64,6 +64,12 @@ public class PriorityQueue<T>
         }
     }
 
+    /**
+     * Method that allows to set a new value of the key of the selected element and change the value of the node to save the parent of the node
+     * @param i: the index of the selected element
+     * @param k: the new value of the key
+     * @param p: the new value of the value 
+     */
     public void decreaseKeyParent(int i,double k,T p) throws PriorityQueueException
     {
         if (list.get(i).getKey() < k)

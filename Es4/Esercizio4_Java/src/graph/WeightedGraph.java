@@ -12,24 +12,32 @@ import priorityqueue.*;
 public class WeightedGraph<T> extends Graph<T,Double>
 {
     /**
-     * 
+     *  The comparator that we use to compare generic name of the Node
      */
     protected Comparator<T> comp; 
 
     /**
-     * 
-     */
+    * Main constructor of the Object Graph
+    * @param isDirect: boolean, true if it Graph is oriented, false the opposite
+    * @param comp: the comparator for the name of the node
+    */
     public WeightedGraph(boolean isDirect,Comparator<T> comp)
     {
         super(isDirect);
         this.comp = comp; 
     }
 
+    /**
+     * Methid that clone the graph
+     */
     public WeightedGraph(WeightedGraph<T> clone)
     {
         super(clone);
     }
 
+    /**
+     * @return: Method that returns the weight of the weighted graph
+     */
     public double weight() throws GraphException
     {
         double result = 0d;
@@ -49,6 +57,10 @@ public class WeightedGraph<T> extends Graph<T,Double>
             return result;
     }
 
+    /**
+     * Method that allows to finde the minumun spanning tree of the weighted graph
+     *  @return: return a new WeightedGraph that rappresents the minimun spanning tree
+     */
     public WeightedGraph<T> prim(T root) throws GraphException, PriorityQueueException
     {
         if(this.isEmpty() || this == null)
@@ -91,7 +103,7 @@ public class WeightedGraph<T> extends Graph<T,Double>
     }
 
     /**
-     *
+     * Method that allow to add the nodes and the archs to the weighted graph
      */
     private void addToResultingGraph(WeightedGraph<T> res,Element<T> elem) throws GraphException 
     {
@@ -100,6 +112,9 @@ public class WeightedGraph<T> extends Graph<T,Double>
             res.addArch(elem.getName(), elem.getValue(), elem.getKey());
     }
 
+    /**
+     * Auxiliary method that is used to create and initialize the min priority queue
+     */
     private void initPq(PriorityQueue<T> pqueue,T root)
     {
         for(T node: adiacentsMap.keySet())

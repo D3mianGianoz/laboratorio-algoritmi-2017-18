@@ -8,23 +8,25 @@ package graph;
 public class Arch <T,V>
 {
     /**
-     * 
+     *  The node from the arch starts
      */
     private T from;
+
     /**
-     * 
+     * The node the arch connects
      */
     private T to;
+
     /**
-     * 
+     * Label that identify the arch
      */
     private V label;
 
     /**
      * Constructor of the support class Arch
-     * @param from: 
-     * @param to:
-     * @param label:
+     * @param from: node from
+     * @param to: node to
+     * @param label: label of the arch
      */
     public Arch(T from,T to,V label)
     {
@@ -34,19 +36,19 @@ public class Arch <T,V>
     }
 
     /**
-     * @return:
+     * @return: the node from of the arch
      */
     public T getFrom()
     { return this.from; }
 
     /**
-     * @return:
+     * @return: the node to of the arch
      */
     public T getTo()
     { return this.to; }
 
     /**
-     * @return:
+     * @return: the label of the arch
      */
     public V getLabel()
     { return this.label; }
