@@ -10,6 +10,9 @@ import java.io.IOException;
  */
 public class PriorityQueue<T>
 {
+    /**
+     * list used to implement the pqueue
+     */
     private ArrayList<Element<T>> list;
 
     /**
@@ -20,8 +23,14 @@ public class PriorityQueue<T>
         list = new ArrayList<Element<T>>();
     }
 
-    public int getnElem()
-    {return this.list.size();}
+    /**
+     * Method that look if the PriorityQueue is empty.
+     * It looks if the ArrayList is empty.
+     * @return: true if it's empty, false otherwise
+     */
+    public boolean isEmpty(){
+        return this.list.isEmpty();
+    }
 
     /**
      * Method that allows to insert a new element in the queue
@@ -88,32 +97,30 @@ public class PriorityQueue<T>
     }
 
     /**
-     * @return: the top element of the queue by dequeue it
+     * Remove the last item ,and set it as new root, bubble-down until heap property is maintained.
+     * @return: the top element(min key) of the queue by dequeue it
+     * @throws priorityqueue.PriorityQueueException: iff the MinHeap is empty
      */
     public Element<T> extractMin() throws PriorityQueueException
     {
-        if (list.size() == 0) 
+        if (list.isEmpty())
             throw new PriorityQueueException("MinHeap is EMPTY");
 
         if (list.size() == 1){
             Element<T> min = list.remove(0);
             return min;
         }
-
-        // remove the last item ,and set it as new root
         Element<T> min = list.get(0);
         Element<T> lastItem = list.remove(list.size() - 1);
         list.set(0, lastItem);
 
-        // bubble-down until heap property is maintained
         minHeapify(0);
 
-        // return min key
         return min;
     }
 
     /**
-     * Put on the top the element with the hightes value of key
+     * Put on the top the element with the lowest value of key
      * @param i: index of the element
      */
     private void minHeapify(int i)
@@ -171,6 +178,7 @@ public class PriorityQueue<T>
 
     /**
      * @return: the left index of the given index
+     * @param i: the index of the element
      */
     private int left(int i)
     {
@@ -180,6 +188,7 @@ public class PriorityQueue<T>
 
     /**
      * @return: the right index of the given index
+     * @param i: the index of the element
      */
     private int right(int i)
     {
@@ -191,13 +200,13 @@ public class PriorityQueue<T>
      */
     public void printList()
     {
-        for (int i=0; i< list.size() ;i++)
+        for (int i=0; i< list.size(); i++)
             System.out.println(list.get(i).toString());
     }
 
     /**
-     * @return: true if the queue contains the element, false otherwise
      * @param elem: the element to check
+     * @return: true if the queue contains the element, false otherwise
      */
     public boolean containElement(Element<T> elem)
     {

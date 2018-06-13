@@ -29,6 +29,7 @@ public class WeightedGraph<T> extends Graph<T,Double>
 
     /**
      * Methid that clone the graph
+     * @param clone: the Object Graph that we want to "clone"
      */
     public WeightedGraph(WeightedGraph<T> clone)
     {
@@ -44,7 +45,6 @@ public class WeightedGraph<T> extends Graph<T,Double>
         if(this.isEmpty() || this == null)
             throw new GraphException(this +" can't be empty or null");
         
-        //System.out.println("Print of Weight of "+ this);
         for(HashMap<T, Double> temp : adiacentsMap.values()){
             for (Double value : temp.values()) {
                     result = result + value.doubleValue();
@@ -58,8 +58,12 @@ public class WeightedGraph<T> extends Graph<T,Double>
     }
 
     /**
-     * Method that allows to finde the minumun spanning tree of the weighted graph
-     *  @return: return a new WeightedGraph that rappresents the minimun spanning tree
+     * Method that allows to finde the minumun spanning tree of the weighted graph,
+     * using a priorityqueue as support
+     * @return: return a new WeightedGraph that rappresents the minimun spanning tree
+     * @param root: the first vertex from which we start the algoritm
+     * @throws graph.GraphException: if the Graph isEmpty, null, isDirect or addToResultingGraph throws
+     * @throws priorityqueue.PriorityQueueException: iff some method fails
      */
     public WeightedGraph<T> prim(T root) throws GraphException, PriorityQueueException
     {
@@ -69,41 +73,36 @@ public class WeightedGraph<T> extends Graph<T,Double>
             throw new GraphException("Prim only works with not direct graph");
 
         WeightedGraph<T> resultingGraph = new WeightedGraph<T>(isDirect,this.comp);
-        
-        // Creo la priorityQUeue che mi servirà per tener traccia dei nodi
         PriorityQueue<T> pqueue = new PriorityQueue<T>();
-        // Vado a settare tutti i nodi nella coda di priorità con massima priorità
+
         initPq(pqueue,root);
       
-        //pq.printList();  //Temporaneo 
-        while(pqueue.getnElem() != 0)
+        while(!pqueue.isEmpty())
         {
             Element<T> element = pqueue.extractMin();
-            //System.out.println("Name: "+element.getName()+" Key: "+element.getKey() + " Value: "+element.getValue());
+
             if(element.getKey() == Double.MAX_VALUE){
                 element.setKey(0);
                 element.setValue(null);
             }
-            
             addToResultingGraph(resultingGraph,element);
-            
-            //System.out.println(u.getName());
+
             HashMap<T,Double> hm = getAdiacent(element.getName());
 
-            //System.out.println(hm.toString());
             for (T vElem : hm.keySet())
             {
-                //System.out.println("U: "+u.getName()+ " V: "+v);
                 if(pqueue.getPosElem(vElem) >= 0 && getLabelArch(element.getName(),vElem) < pqueue.getElem(vElem).getKey())
                     pqueue.decreaseKeyParent(pqueue.getPosElem(vElem), getLabelArch(element.getName(),vElem), element.getName());
             }
-            //pq.printList();
         }
         return resultingGraph;        
     }
 
     /**
      * Method that allow to add the nodes and the archs to the weighted graph
+     * @param res: the WGraph
+     * @param elem: the element from the pqueue to add
+     * @throws graph.GraphException: iff addNode or addArch fails
      */
     private void addToResultingGraph(WeightedGraph<T> res,Element<T> elem) throws GraphException 
     {
@@ -113,7 +112,9 @@ public class WeightedGraph<T> extends Graph<T,Double>
     }
 
     /**
-     * Auxiliary method that is used to create and initialize the min priority queue
+     * Auxiliary method that is used to create and inizialize the min priority queue
+     * @param pqueue: the queue
+     * @param root: the first element of the queue
      */
     private void initPq(PriorityQueue<T> pqueue,T root)
     {

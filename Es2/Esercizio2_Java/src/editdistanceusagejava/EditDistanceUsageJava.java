@@ -23,6 +23,8 @@ public class EditDistanceUsageJava {
         if (args.length != 2)
             System.out.println("Usage: java EditDistanceUsage 'dictionary.txt' 'correctme.txt'");
 
+        long startTime = System.nanoTime();
+
         String dictionary = args[0];
         String Jlennon = args[1];
 
@@ -37,6 +39,10 @@ public class EditDistanceUsageJava {
         }
 
         spellChecker(dictList, jlenList);
+
+        long endTime = System.nanoTime();
+        long totalTime = (endTime - startTime) / 1000000;
+        System.out.println("\nTime to compute: " + totalTime + "ms");
     }
 
     private static void loadFile(String filepath, ArrayList<String> wordlist) throws IOException {
